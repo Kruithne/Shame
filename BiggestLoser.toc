@@ -1,0 +1,7 @@
+## Interface: 70000
+## Title: TraceExport
+## Notes: Exports trace information.
+## Author: Kruithne
+## Version: 1.0
+## SavedVariables: TraceExportData
+TraceExport.lua
