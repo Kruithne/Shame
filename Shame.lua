@@ -100,10 +100,10 @@ _M.RemoveEventHandler = function(event)
 	_M.eventHandlers[event] = nil;
 end
 
-_M.ThrowResponse = function(actorGUID, failType, ...)
+_M.ThrowResponse = function(actorGUID, node, failType, ...)
 	if failType then
 		local baseMessage = string_format(failType.message, ...);
-		local worth = failType.worth or 1;
+		local worth = node.worth or 1;
 		local newWorth = (_M.boardGroup[actorGUID] or 0) + worth;
 
 		_M.boardGroup[actorGUID] = newWorth;
@@ -389,7 +389,7 @@ _M.FailCheck_SelfCast = function(node, failType, ...)
 	local _, sourceGUID, sourceName, _, _, _, _, _, _, _, spellName = ...;
 
 	if _M.IsGroupActor(sourceGUID) then
-		return sourceGUID, failType, sourceName, spellName;
+		return sourceGUID, node, failType, sourceName, spellName;
 	end
 
 	return nil;
@@ -418,7 +418,7 @@ _M.FailCheck_CatchOther = function(node, failType, ...)
 			C_Timer.After(2, removeFunc);
 
 			if faultActor ~= destGUID then
-				return faultActor, failType, _M.ActorName(faultActor), destName, spellName; 
+				return faultActor, node, failType, _M.ActorName(faultActor), destName, spellName; 
 			end
 		end
 	end
@@ -430,7 +430,7 @@ _M.FailCheck_DangerZone = function(node, failType, ...)
 	local _, _, _, _, _, destGUID, destName, _, _, _, spellName = ...;
 
 	if _M.IsGroupActor(destGUID) then
-		return destGUID, failType, destName, spellName;
+		return destGUID, node, failType, destName, spellName;
 	end
 
 	return nil;
