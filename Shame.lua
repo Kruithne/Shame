@@ -52,7 +52,7 @@ local _M = {
 	tracking = false, -- Flag for tracking state.
 	boardGroup = {}, -- Leaderboard for the group.
 	modeChannel = "party", -- Real-time shaming channel.
-	mode = "all", -- Real-time shaming mode.
+	mode = "self", -- Real-time shaming mode.
 };
 
 -- [[ Functions ]] --
@@ -112,7 +112,7 @@ _M.ThrowResponse = function(actorGUID, failType, ...)
 		if _M.mode == "all" or _M.mode == "self" then
 			local target = nil;
 			if _M.mode == "all" then target = _M.modeChannel; end
-			
+
 			_M.MessageFormatted(FORMAT_READ_OUT, target, baseMessage, worth, newWorth);
 		end
 	end
@@ -239,7 +239,7 @@ _M.GetFormattedList = function(pool)
 end
 
 _M.PrintCurrentMode = function()
-	if _M.mode ~= "silent" then
+	if _M.mode == "all" then
 		_M.MessageFormatted("Real-time shaming mode set to |cfff58cba%s|r |cffaeebffin|r |cfff58cba%s|r|cffaeebff.|r", nil, _M.mode, _M.modeChannel);
 	else
 		_M.MessageFormatted("Real-time shaming mode set to |cfff58cba%s|r |cffaeebff.", nil, _M.mode);
