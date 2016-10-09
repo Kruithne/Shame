@@ -3,6 +3,7 @@ local type = type;
 local wipe = wipe;
 local pairs = pairs;
 local IsInRaid = IsInRaid;
+local After = C_Timer.After;
 local IsInGroup = IsInGroup;
 local string_sub = string.sub;
 local string_len = string.len;
@@ -37,6 +38,7 @@ local VALID_MODES = { ["all"] = true, ["silent"] = true, ["self"] = true };
 local FAIL_TYPE_SELF_CAST = 1;
 local FAIL_TYPE_CATCH_OTHER = 2;
 local FAIL_TYPE_DANGER_ZONE = 3;
+local FAIL_TYPE_TANK_AIM = 4;
 
 local ENCOUNTER_DATA;
 local FAIL_TYPES;
@@ -46,6 +48,7 @@ local COMMANDS;
 local _M = {
 	eventFrame = CreateFrame("FRAME"),
 	groupData = nil, -- Used to store group GUID cache.
+	groupRoles = nil, -- Used to store group roles.
 	playerGUID = UnitGUID("player"), -- Player's GUID.
 	eventHandlers = {}, -- Stores assigned event handlers.
 	currentPool = nil, -- Current encounter nodes for the map.
@@ -72,8 +75,11 @@ _M.OnLoad = function()
 	_M.SetEventHandler({
 		["RAID_ROSTER_UPDATE"] = _M.OnEvent_RosterUpdate,
 		["GROUP_ROSTER_UPDATE"] = _M.OnEvent_RosterUpdate,
+		["PLAYER_SPECIALIZATION_CHANGED"] = _M.OnEvent_RosterUpdate,
+
 		["ZONE_CHANGED_NEW_AREA"] = _M.OnEvent_ZoneChangedNewArea,
 		["PLAYER_ENTERING_WORLD"] = _M.OnEvent_ZoneChangedNewArea,
+
 		["COMBAT_LOG_EVENT_UNFILTERED"] = _M.OnEvent_CombatLogEventUnfiltered,
 	});
 
@@ -138,6 +144,28 @@ _M.IsGroupActor = function(guid)
 
 	local groupData = _M.groupData;
 	return groupData and groupData[guid] or nil;
+end
+
+_M.GetActorRole = function(guid)
+	if _M.roleData then
+		local role = _M.roleData[guid];
+		if role then
+			return role;
+		end
+	end
+	return "NONE";
+end
+
+_M.IsActorTank = function(guid)
+	return _M.GetActorRole(guid) == "TANK";
+end
+
+_M.IsActorDamage = function(guid)
+	return _M.GetActorRole(guid) == "DAMAGER";
+end
+
+_M.IsActorHealer = function(guid)
+	return _M.GetActorRole(guid) == "HEALER";
 end
 
 _M.Enable = function()
@@ -340,6 +368,7 @@ _M.OnEvent_ZoneChangedNewArea = function()
 
 	_M.currentPool = not isContinent and ENCOUNTER_DATA[mapID] or nil;
 	_M.groupData = _M.currentPool and {} or nil;
+	_M.groupRoles = _M.currentPool and {} or nil;
 end
 
 _M.OnEvent_CombatLogEventUnfiltered = function(serverTime, subEvent, ...)
@@ -367,6 +396,7 @@ end
 _M.OnEvent_RosterUpdate = function()
 	if _M.currentPool then
 		local groupData = wipe(_M.groupData);
+		local roleData = wipe(_M.groupRoles);
 		local slotPool;
 
 		if IsInRaid() then
@@ -379,7 +409,9 @@ _M.OnEvent_RosterUpdate = function()
 			for i = 1, #slotPool do
 				local unitID = slotPool[i];
 				if UnitExists(unitID) then
-					groupData[UnitGUID(unitID)] = unitID;
+					local actorGUID = UnitGUID(unitID);
+					groupData[actorGUID] = unitID;
+					roleData[actorGUID] = UnitGroupRolesAssigned(unitID);
 				end
 			end
 		end
@@ -416,7 +448,7 @@ _M.FailCheck_CatchOther = function(node, failType, ...)
 
 		if faultActor then
 			local removeFunc = function() _CatchOtherCache[sourceGUID] = nil; end
-			C_Timer.After(2, removeFunc);
+			After(2, removeFunc);
 
 			if faultActor ~= destGUID then
 				return faultActor, node, failType, _M.ActorName(faultActor), destName, spellName; 
@@ -434,6 +466,45 @@ _M.FailCheck_DangerZone = function(node, failType, ...)
 		return destGUID, node, failType, destName, spellName;
 	end
 
+	return nil;
+end
+
+local _CacheTankAim = {};
+_M.FailCheck_TankAim = function(node, failType, ...)
+	local _, sourceGUID, sourceName, _, _, destGUID, destName, _, _, _, spellName = ...;
+
+	if not _CacheTankAim[sourceGUID] then
+		_CacheTankAim[sourceGUID] = {};
+
+		local verifyFunc = function()
+			local tanks = {};
+			local victims = {};
+
+			for actorGUID, actorName in pairs(_CacheTankAim) do
+				if _M.IsActorTank(actorGUID) then
+					tanks[#tanks + 1] = actorGUID;
+				else
+					victims[#victims + 1] = actorGUID;
+				end
+			end
+
+			if #victims and #tanks then
+				local hitText = #victims > 1 and "multiple people" or victims[1];
+				for i = 1, #tanks do 
+					local tankGUID = tanks[i];
+					if _M.IsGroupActor(tankGUID) then
+						_M.ThrowResponse(node, failType, tanks[tankGUID], spellName);
+					end
+				end
+			end
+
+			_CacheTankAim[sourceGUID] = nil;
+		end
+
+		After(1, verifyFunc);
+	end
+
+	_CacheTankAim[sourceGUID][destGUID] = destName;
 	return nil;
 end
 
@@ -458,18 +529,20 @@ FAIL_TYPES = {
 	[FAIL_TYPE_SELF_CAST] = { message = "%s cast %s", func = _M.FailCheck_SelfCast },
 	[FAIL_TYPE_CATCH_OTHER] = { message = "%s hit %s with %s", func = _M.FailCheck_CatchOther },
 	[FAIL_TYPE_DANGER_ZONE] = { message = "%s stood in the %s", func = _M.FailCheck_DangerZone },
+	[FAIL_TYPE_TANK_AIM] = { message = "%s failed to aim %s properly", func = _M.FailCheck_TankAim },
 };
 
 ENCOUNTER_DATA = {
 	[1105] = { -- Halls of Valor
 		["SPELL_AURA_REMOVED"] = {
-			[198599] = { errorType = FAIL_TYPE_CATCH_OTHER, track = true }, -- Thunderstrike (Aura) [Heroic]
+			[198599] = { errorType = FAIL_TYPE_CATCH_OTHER, track = true }, -- Valarjar Thundercaller @ Thunderstrike (Aura) [Heroic]
 		},
 		["SPELL_DAMAGE"] = {
-			[198605] = { errorType = FAIL_TYPE_CATCH_OTHER, worth = 2 }, -- Thunderstrike (Damage Hit) [Heroic]
+			[198605] = { errorType = FAIL_TYPE_CATCH_OTHER, worth = 2 }, -- Valarjar Thundercaller @ Thunderstrike (Damage Hit) [Heroic]
+			[193092] = { errorType = FAIL_TYPE_TANK_AIM }, -- Hymdall @ Bloodletting Sweep (Cleave) [Heroic]
 		},
 		["SPELL_PERIODIC_DAMAGE"] = {
-			[193234] = { errorType = FAIL_TYPE_DANGER_ZONE }, -- Dancing Blade (Periodic Debuff)
+			[193234] = { errorType = FAIL_TYPE_DANGER_ZONE }, -- Hymdall @ Dancing Blade (Periodic Debuff)
 		},
 	}
 };
