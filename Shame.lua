@@ -36,6 +36,7 @@ local VALID_MODES = { ["all"] = true, ["silent"] = true, ["self"] = true };
 
 local FAIL_TYPE_SELF_CAST = 1;
 local FAIL_TYPE_CATCH_OTHER = 2;
+local FAIL_TYPE_DANGER_ZONE = 3;
 
 local ENCOUNTER_DATA;
 local FAIL_TYPES;
