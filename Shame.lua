@@ -35,7 +35,7 @@ local VALID_OUTPUT_CHANNELS = { ["guild"] = true, ["instance"] = true, ["officer
 local VALID_MODES = { ["all"] = true, ["silent"] = true, ["self"] = true };
 
 local FAIL_TYPE_SELF_CAST = 1;
-local FAIL_CATCH_OTHER = 2;
+local FAIL_TYPE_CATCH_OTHER = 2;
 
 local ENCOUNTER_DATA;
 local FAIL_TYPES;
@@ -377,7 +377,9 @@ _M.OnEvent_RosterUpdate = function()
 		if slotPool then
 			for i = 1, #slotPool do
 				local unitID = slotPool[i];
-				groupData[UnitGUID(unitID)] = unitID;
+				if UnitExists(unitID) then
+					groupData[UnitGUID(unitID)] = unitID;
+				end
 			end
 		end
 	end
@@ -393,8 +395,31 @@ _M.FailCheck_SelfCast = function(node, failType, ...)
 	return nil;
 end
 
+local _CatchOtherCache = {};
 _M.FailCheck_CatchOther = function(node, failType, ...)
-	-- ToDo: Make me, please. I'm so empty inside.
+	if node.track then
+		-- source = NPC which cast the spell in the first place.
+		-- dest = Player who just had the aura expire.
+		local _, sourceGUID, sourceName, _, _, destGUID = ...;
+		_CatchOtherCache[sourceGUID] = destGUID;
+		return nil;
+	else
+		-- source = NPC which cast the spell in the first place.
+		-- dest = Player who was just hit by the damage.
+		local _, sourceGUID, sourceName, _, _, destGUID, destName, _, _, _, spellName = ...;
+		local faultActor = _CatchOtherCache[sourceGUID];
+
+		if faultActor then
+			local removeFunc = function() _CatchOtherCache[sourceGUID] = nil; end
+			C_Timer.After(2, removeFunc);
+
+			if faultActor ~= destGUID then
+				return faultActor, failType, _M.ActorName(faultActor), destName, spellName; 
+			end
+		end
+	end
+
+	return nil;
 end
 
 -- [[ Initial Set-up ]] --
@@ -415,25 +440,17 @@ COMMANDS = {
 };
 
 FAIL_TYPES = {
-	[FAIL_TYPE_SELF_CAST] = { message = "%s cast %s during a test", func = _M.FailCheck_SelfCast }
+	[FAIL_TYPE_SELF_CAST] = { message = "%s cast %s", func = _M.FailCheck_SelfCast },
+	[FAIL_TYPE_CATCH_OTHER] = { message = "%s hit %s with %s", func = _M.FailCheck_CatchOther },
 };
 
 ENCOUNTER_DATA = {
-	[1077] = {
-		["SPELL_CAST_SUCCESS"] = {
-			[774] = { errorType = FAIL_TYPE_SELF_CAST, worth = 2 }
-		}
-	},
-	[1041] = { -- Halls of Valor
+	[1105] = { -- Halls of Valor
+		["SPELL_AURA_REMOVED"] = {
+			[198599] = { errorType = FAIL_TYPE_CATCH_OTHER, track = true }, -- Thunderstrike (Aura) [Heroic]
+		},
 		["SPELL_DAMAGE"] = {
-			[198599] = { errorType = FAIL_CATCH_OTHER, worth = 2 }, -- Thunderstrike AoE damage.
+			[198605] = { errorType = FAIL_TYPE_CATCH_OTHER, worth = 2 }, -- Thunderstrike (Damage Hit) [Heroic]
 		}
 	}
 };
-
--- Thunderstrike
--- 198605 is the direct damage from SPELL_AURA_REMOVED
--- 198599 is the aura that's removed from SPELL_DAMAGE
-
--- [[ ToDo ]] --
--- 
