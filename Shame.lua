@@ -401,7 +401,11 @@ _M.FailCheck_CatchOther = function(node, failType, ...)
 		-- source = NPC which cast the spell in the first place.
 		-- dest = Player who just had the aura expire.
 		local _, sourceGUID, sourceName, _, _, destGUID = ...;
-		_CatchOtherCache[sourceGUID] = destGUID;
+
+		if _M.IsGroupActor(destGUID) then
+			_CatchOtherCache[sourceGUID] = destGUID;
+		end
+
 		return nil;
 	else
 		-- source = NPC which cast the spell in the first place.
@@ -417,6 +421,16 @@ _M.FailCheck_CatchOther = function(node, failType, ...)
 				return faultActor, failType, _M.ActorName(faultActor), destName, spellName; 
 			end
 		end
+	end
+
+	return nil;
+end
+
+_M.FailCheck_DangerZone = function(node, failType, ...)
+	local _, _, _, _, _, destGUID, destName, _, _, _, spellName = ...;
+
+	if _M.IsGroupActor(destGUID) then
+		return destGUID, failType, destName, spellName;
 	end
 
 	return nil;
@@ -442,6 +456,7 @@ COMMANDS = {
 FAIL_TYPES = {
 	[FAIL_TYPE_SELF_CAST] = { message = "%s cast %s", func = _M.FailCheck_SelfCast },
 	[FAIL_TYPE_CATCH_OTHER] = { message = "%s hit %s with %s", func = _M.FailCheck_CatchOther },
+	[FAIL_TYPE_DANGER_ZONE] = { message = "%s stood in the %s", func = _M.FailCheck_DangerZone },
 };
 
 ENCOUNTER_DATA = {
@@ -451,6 +466,9 @@ ENCOUNTER_DATA = {
 		},
 		["SPELL_DAMAGE"] = {
 			[198605] = { errorType = FAIL_TYPE_CATCH_OTHER, worth = 2 }, -- Thunderstrike (Damage Hit) [Heroic]
+		}
+		["SPELL_PERIODIC_DAMAGE"] = {
+			[193234] = { errorType = FAIL_TYPE_DANGER_ZONE }, -- Dancing Blade (Periodic Debuff)
 		}
 	}
 };
