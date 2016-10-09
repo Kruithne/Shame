@@ -466,9 +466,9 @@ ENCOUNTER_DATA = {
 		},
 		["SPELL_DAMAGE"] = {
 			[198605] = { errorType = FAIL_TYPE_CATCH_OTHER, worth = 2 }, -- Thunderstrike (Damage Hit) [Heroic]
-		}
+		},
 		["SPELL_PERIODIC_DAMAGE"] = {
 			[193234] = { errorType = FAIL_TYPE_DANGER_ZONE }, -- Dancing Blade (Periodic Debuff)
-		}
+		},
 	}
 };
