@@ -5,3 +5,5 @@
 ## Version: 1.0
 ## SavedVariables: ShameData
 Shame.lua
+
+## X-GitHub-Repo: Kruithne/Shame
