@@ -53,6 +53,7 @@ end
 
 _M.OnLoad = function()
 	_M.Message("Loaded v" .. GetAddOnMetadata(ADDON_NAME, "Version"));
+	hooksecurefunc(ChatFrame1, "AddMessage", _M.ChatHook);
 end
 
 _M.OnEvent = function(self, event, ...)
@@ -112,13 +113,6 @@ _M.ListCommands = function()
 		end
 	end
 	return true;
-end
-
-_M.OnOfficerChat = function(message, sender)
-	if message:find("^SHAME") then
-		local target, worth, reason = message:match("^SHAME:(.+):(%d+):(.+)$");
-		_M.AddShame(target, tonumber(worth), reason);
-	end
 end
 
 _M.OnCommand = function(text, editbox)
@@ -244,6 +238,17 @@ _M.Command_Print = function(args)
 	end
 
 	return true;
+end
+
+_M.ChatHook = function(self, message)
+	if message:find("^SHAME:") then
+		if _M.tracking then
+			local target, worth, reason = message:match("^SHAME:(.+):(%d+):(.+)$");
+			_M.AddShame(target, tonumber(worth), reason);
+		end
+
+		ChatFrame1:RemoveMessagesByPredicate(function(text) return text:find("^SHAME:"); end);
+	end
 end
 
 _M.Command_Enable = function()
