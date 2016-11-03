@@ -1,7 +1,7 @@
 {
   actions = {
     start = {
-      custom = 'local tank = nil;\nlocal myRole = UnitGroupRolesAssigned("player");\nif myRole == "TANK" and not UnitIsDead("player") then\n    tank = UnitName("player");\nelse\n    for i = 1, 4 do\n        local slot = "party" .. i;\n        local role = UnitGroupRolesAssigned(slot);\n        if role == "TANK" and not UnitIsDead(slot) then\n            tank = UnitName(slot);\n            break;\n        end\n    end\nend\n\nif tank then\n    local worth = 10;\n    local player = aura_env.state.destName;\n    local spell = aura_env.state.spellName;\n    \n    if tank ~= player then\n        local msgRaw = "%s hit %s with %s";\n        local msg = msgRaw:format(tank, player, spell);\n        \n        local form = "SHAME:%s:%s:%s";\n        SendChatMessage(form:format(tank, worth, msg), "OFFICER");\n    end\nend',
+      custom = 'local tank = nil;\nlocal myRole = UnitGroupRolesAssigned("player");\nif myRole == "TANK" and not UnitIsDead("player") then\n    tank = UnitName("player");\nelse\n    for i = 1, 4 do\n        local slot = "party" .. i;\n        local role = UnitGroupRolesAssigned(slot);\n        if role == "TANK" and not UnitIsDead(slot) then\n            tank = UnitName(slot);\n            break;\n        end\n    end\nend\n\nif tank then\n    local worth = 10;\n    local player = aura_env.state.destName;\n    local spell = aura_env.state.spellName;\n    \n    if tank ~= player then\n        local msgRaw = "%s hit %s with %s";\n        local msg = msgRaw:format(tank, player, spell);\n        \n        local form = "SHAME:%s:%s:%s";\n        ChatFrame1:AddMessage(form:format(tank, worth, msg));\n    end\nend',
       do_custom = true
     }
   },

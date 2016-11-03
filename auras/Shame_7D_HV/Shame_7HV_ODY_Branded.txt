@@ -1,7 +1,7 @@
 {
   actions = {
     start = {
-      custom = "local worth = 7;\nlocal player = aura_env.state.destName;\nlocal spell = aura_env.state.spellName;\n\nlocal msgRaw = \"%s didn't stand in the bubble (%s)\";\nlocal msg = msgRaw:format(player, spell);\n\nlocal form = \"SHAME:%s:%s:%s\";\nSendChatMessage(form:format(player, worth, msg), \"OFFICER\");",
+      custom = "local worth = 7;\nlocal player = aura_env.state.destName;\nlocal spell = aura_env.state.spellName;\n\nlocal msgRaw = \"%s didn't stand in the bubble (%s)\";\nlocal msg = msgRaw:format(player, spell);\n\nlocal form = \"SHAME:%s:%s:%s\";\nChatFrame1:AddMessage(form:format(player, worth, msg));",
       do_custom = false
     }
   },
@@ -40,7 +40,7 @@
   numTriggers = 1,
   regionType = "text",
   trigger = {
-    custom = "function(prime, dt, event, ...)\n    local _, _, _, _, _, _, playerName, _, _, _, spellName = ...;\n    if spellName == \"Runic Brand\" then\n        if event == \"SPELL_AURA_REMOVED\" then\n            local debuff = UnitDebuff(playerName, \"Branded\");\n            \n            if not debuff then\n                local msg = \"SHAME:%s:5:%s didn't get Branded during %s\";\n                SendChatMessage(msg:format(playerName, playerName, spellName), \"OFFICER\");\n            end\n        end\n    end\n    return false;\nend",
+    custom = "function(prime, dt, event, ...)\n    local _, _, _, _, _, _, playerName, _, _, _, spellName = ...;\n    if spellName == \"Runic Brand\" then\n        if event == \"SPELL_AURA_REMOVED\" then\n            local debuff = UnitDebuff(playerName, \"Branded\");\n            \n            if not debuff then\n                local msg = \"SHAME:%s:5:%s didn't get Branded during %s\";\n                ChatFrame1:AddMessage(msg:format(playerName, playerName, spellName));\n            end\n        end\n    end\n    return false;\nend",
     custom_hide = "timed",
     custom_type = "event",
     duration = "0.1",

@@ -1,7 +1,7 @@
 {
   actions = {
     start = {
-      custom = "local worth = 4;\nlocal player = aura_env.state.destName;\nlocal spell = aura_env.state.spellName;\n\nlocal msgRaw = \"%s stood in the %s\";\nlocal msg = msgRaw:format(player, spell);\n\nif UnitBuff(player, \"Odyn's Blessing\") then\n    worth = 7;\n    msg = msg .. \" with Odyn's Blessing\";\nend\n\nlocal form = \"SHAME:%s:%s:%s\";\nSendChatMessage(form:format(player, worth, msg), \"OFFICER\");",
+      custom = "local worth = 4;\nlocal player = aura_env.state.destName;\nlocal spell = aura_env.state.spellName;\n\nlocal msgRaw = \"%s stood in the %s\";\nlocal msg = msgRaw:format(player, spell);\n\nif UnitBuff(player, \"Odyn's Blessing\") then\n    worth = 7;\n    msg = msg .. \" with Odyn's Blessing\";\nend\n\nlocal form = \"SHAME:%s:%s:%s\";\nChatFrame1:AddMessage(form:format(player, worth, msg));",
       do_custom = true
     }
   },

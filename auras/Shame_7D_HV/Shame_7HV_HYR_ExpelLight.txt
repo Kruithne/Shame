@@ -32,7 +32,7 @@
   numTriggers = 1,
   regionType = "text",
   trigger = {
-    custom = 'function(prime, dt, event, ...)\n    local _, _, _, _, _, _, playerName, _, _, _, spellName = ...;\n    \n    if spellName == "Expel Light" then\n        if event == "SPELL_AURA_REMOVED" then\n            aura_env.carrier = playerName;\n        elseif event == "SPELL_DAMAGE" then\n            local carrier = aura_env.carrier;\n            if carrier ~= playerName then\n                local msg = "SHAME:%s:5:%s hit %s with Expel Light";\n                SendChatMessage(msg:format(carrier, carrier, playerName), "OFFICER");\n            end\n        end\n    end\n    return false;\nend',
+    custom = 'function(prime, dt, event, ...)\n    local _, _, _, _, _, _, playerName, _, _, _, spellName = ...;\n    \n    if spellName == "Expel Light" then\n        if event == "SPELL_AURA_REMOVED" then\n            aura_env.carrier = playerName;\n        elseif event == "SPELL_DAMAGE" then\n            local carrier = aura_env.carrier;\n            if carrier ~= playerName then\n                local msg = "SHAME:%s:5:%s hit %s with Expel Light";\n                ChatFrame1:AddMessage(msg:format(carrier, carrier, playerName));\n            end\n        end\n    end\n    return false;\nend',
     custom_hide = "timed",
     custom_type = "event",
     event = "Combat Log",

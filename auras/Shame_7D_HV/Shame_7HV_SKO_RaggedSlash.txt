@@ -1,7 +1,7 @@
 {
   actions = {
     start = {
-      custom = 'local worth = 7;\nlocal player = aura_env.state.destName;\nlocal spell = aura_env.state.spellName;\n\nlocal msgRaw = "%s failed to mitigate %s";\nlocal msg = msgRaw:format(player, spell);\n\nlocal form = "SHAME:%s:%s:%s";\nSendChatMessage(form:format(player, worth, msg), "OFFICER");',
+      custom = 'local worth = 7;\nlocal player = aura_env.state.destName;\nlocal spell = aura_env.state.spellName;\n\nlocal msgRaw = "%s failed to mitigate %s";\nlocal msg = msgRaw:format(player, spell);\n\nlocal form = "SHAME:%s:%s:%s";\nChatFrame1:AddMessage(form:format(player, worth, msg));',
       do_custom = true
     }
   },
