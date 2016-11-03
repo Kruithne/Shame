@@ -2,6 +2,8 @@
 
 **Please note this add-on was created with the primary intention of being used by my guild. It is not designed to be user-friendly nor intended for users with little add-on experience. This page covers everything you need to know.**
 
+Experimental files: https://wow.curseforge.com/addons/shame/files/
+
 This project is open-source and maintained on GitHub here: https://github.com/Kruithne/Shame
 
 This add-on is intended to track avoidable fails that your group and guild make in a leader-board fashion.
