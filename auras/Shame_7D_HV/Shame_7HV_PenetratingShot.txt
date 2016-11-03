@@ -1,0 +1,50 @@
+{
+  actions = {
+    start = {
+      custom = 'local worth = 7;\nlocal player = aura_env.state.destName;\nlocal spell = aura_env.state.spellName;\n\nlocal msgRaw = "%s stood in the line of %s";\nlocal msg = msgRaw:format(player, spell);\n\nlocal form = "SHAME:%s:%s:%s";\nSendChatMessage(form:format(player, worth, msg), "OFFICER");',
+      do_custom = true
+    }
+  },
+  activeTriggerMode = -10,
+  additional_triggers = {},
+  disjunctive = "all",
+  displayText = " ",
+  height = 11.99995803833,
+  id = "Shame_7HV_PenetratingShot",
+  init_completed = 1,
+  load = {
+    difficulty = {
+      multi = {}
+    },
+    faction = {
+      multi = {}
+    },
+    pvptalent = {
+      multi = {}
+    },
+    race = {
+      multi = {}
+    },
+    role = {
+      multi = {}
+    },
+    talent = {
+      multi = {}
+    },
+    use_zone = true,
+    zone = "Halls of Valor"
+  },
+  numTriggers = 1,
+  regionType = "text",
+  trigger = {
+    duration = "0.1",
+    event = "Combat Log",
+    spellName = "Penetrating Shot",
+    subeventSuffix = "_DAMAGE",
+    type = "event",
+    unevent = "timed",
+    use_cloneId = true,
+    use_spellName = true
+  },
+  width = 6.9999208450317
+}

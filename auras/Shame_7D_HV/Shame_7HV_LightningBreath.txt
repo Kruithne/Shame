@@ -1,0 +1,49 @@
+{
+  actions = {
+    start = {
+      custom = 'local tank = nil;\nlocal myRole = UnitGroupRolesAssigned("player");\nif myRole == "TANK" and not UnitIsDead("player") then\n    tank = UnitName("player");\nelse\n    for i = 1, 4 do\n        local slot = "party" .. i;\n        local role = UnitGroupRolesAssigned(slot);\n        if role == "TANK" and not UnitIsDead(slot) then\n            tank = UnitName(slot);\n            break;\n        end\n    end\nend\n\nif tank then\n    local worth = 5;\n    local player = aura_env.state.destName;\n    local spell = aura_env.state.spellName;\n\n    if tank ~= player then\n        local msgRaw = "%s hit %s with %s";\n        local msg = msgRaw:format(tank, player, spell);\n\n        local form = "SHAME:%s:%s:%s";\n        SendChatMessage(form:format(tank, worth, msg), "OFFICER");\n    end\nend',
+      do_custom = true
+    }
+  },
+  activeTriggerMode = -10,
+  disjunctive = "all",
+  displayText = " ",
+  height = 11.99995803833,
+  id = "Shame_7HV_LightningBreath",
+  init_completed = 1,
+  load = {
+    difficulty = {
+      multi = {}
+    },
+    faction = {
+      multi = {}
+    },
+    pvptalent = {
+      multi = {}
+    },
+    race = {
+      multi = {}
+    },
+    role = {
+      multi = {}
+    },
+    talent = {
+      multi = {}
+    },
+    use_zone = true,
+    zone = "Halls of Valor"
+  },
+  numTriggers = 1,
+  regionType = "text",
+  trigger = {
+    duration = "0.1",
+    event = "Combat Log",
+    spellName = "Lightning Breath",
+    subeventSuffix = "_DAMAGE",
+    type = "event",
+    unevent = "timed",
+    use_cloneId = true,
+    use_spellName = true
+  },
+  width = 6.9999208450317
+}

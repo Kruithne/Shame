@@ -1,0 +1,50 @@
+{
+  actions = {
+    start = {
+      custom = "local worth = 5;\nlocal victim = aura_env.state.destName;\nlocal spell = aura_env.state.spellName;\n\nlocal form = \"SHAME:%s:%s:%s\";\n\nif not UnitDebuff(victim, \"Aegis of Aggramar\") then\n    local tank = nil;\n    local tankIsUsing = nil;\n\n    local checkPlayerIsTank = function(unitID)\n        if tank then\n            return;\n        end\n\n        for i = 1, 40 do\n            local _, _, _, _, _, _, _, _, _, _, spellID = UnitDebuff(\"player\", i);\n            if not spellID then\n                return;\n            end\n\n            if spellID == 193783 then\n                tank = unitID;\n            elseif spellID == 193743 then\n                tankIsUsing = true;\n            end\n        end\n    end\n\n    checkPlayerIsTank(\"player\");\n    for i = 1, 4 do\n        checkPlayerIsTank(\"party\" .. i);\n    end\n\n    if tank then\n        if tankIsUsing then\n            -- Shame victim.\n            local msgRaw = \"%s wasn't behind the shield for %s\";\n            local msg = msgRaw:format(victim, spell);\n            \n            SendChatMessage(form:format(victim, worth, msg), \"OFFICER\");\n        else\n            -- Shame tank.\n            worth = 2;\n\n            local tankName = UnitName(tank);\n    \n            local msgRaw = \"%s failed to shield %s for %s\";\n            local msg = msgRaw:format(tankName, victim, spell);\n            \n            SendChatMessage(form:format(tankName, worth, msg), \"OFFICER\");\n        end\n    end\nend",
+      do_custom = true
+    }
+  },
+  activeTriggerMode = -10,
+  disjunctive = "all",
+  displayText = " ",
+  height = 11.99995803833,
+  id = "Shame_7HV_SKO_Ragnarok",
+  load = {
+    difficulty = {
+      multi = {}
+    },
+    encounterid = "1808",
+    faction = {
+      multi = {}
+    },
+    pvptalent = {
+      multi = {}
+    },
+    race = {
+      multi = {}
+    },
+    role = {
+      multi = {}
+    },
+    talent = {
+      multi = {}
+    },
+    use_encounterid = true,
+    use_zone = true,
+    zone = "Halls of Valor"
+  },
+  numTriggers = 1,
+  regionType = "text",
+  trigger = {
+    duration = "0.1",
+    event = "Combat Log",
+    spellName = "Ragnarok",
+    subeventSuffix = "_DAMAGE",
+    type = "event",
+    unevent = "timed",
+    use_cloneId = true,
+    use_spellName = true
+  },
+  width = 6.9999208450317
+}

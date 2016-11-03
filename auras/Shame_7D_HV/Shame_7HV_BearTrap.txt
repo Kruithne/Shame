@@ -1,0 +1,53 @@
+{
+  actions = {
+    start = {
+      custom = 'local worth = 5;\nlocal player = aura_env.state.destName;\nlocal spell = aura_env.state.spellName;\n\nlocal msgRaw = "%s got caught in a %s";\nlocal msg = msgRaw:format(player, spell);\n\nlocal form = "SHAME:%s:%s:%s";\nSendChatMessage(form:format(player, worth, msg), "OFFICER");',
+      do_custom = true
+    }
+  },
+  activeTriggerMode = -10,
+  additional_triggers = {},
+  disjunctive = "all",
+  displayText = " ",
+  height = 11.99995803833,
+  id = "Shame_7HV_BearTrap",
+  init_completed = 1,
+  load = {
+    difficulty = {
+      multi = {}
+    },
+    faction = {
+      multi = {}
+    },
+    pvptalent = {
+      multi = {}
+    },
+    race = {
+      multi = {}
+    },
+    role = {
+      multi = {}
+    },
+    talent = {
+      multi = {}
+    },
+    use_zone = true,
+    zone = "Halls of Valor"
+  },
+  numTriggers = 1,
+  regionType = "text",
+  trigger = {
+    duration = "0.1",
+    event = "Combat Log",
+    name = "Bear Trap",
+    spellId = "199340",
+    spellName = "Bear Trap",
+    subeventSuffix = "_AURA_APPLIED",
+    type = "event",
+    unevent = "timed",
+    use_cloneId = true,
+    use_spellId = true,
+    use_spellName = false
+  },
+  width = 6.9999208450317
+}

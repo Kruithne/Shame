@@ -1,0 +1,56 @@
+{
+  actions = {
+    start = {
+      custom = "local worth = 7;\nlocal player = aura_env.state.destName;\nlocal spell = aura_env.state.spellName;\n\nlocal msgRaw = \"%s didn't stand in the bubble (%s)\";\nlocal msg = msgRaw:format(player, spell);\n\nlocal form = \"SHAME:%s:%s:%s\";\nSendChatMessage(form:format(player, worth, msg), \"OFFICER\");",
+      do_custom = false
+    }
+  },
+  activeTriggerMode = -10,
+  additional_triggers = {},
+  disjunctive = "all",
+  displayText = " ",
+  height = 11.99995803833,
+  id = "Shame_7HV_FEN_ScentOfBlood",
+  init_completed = 1,
+  load = {
+    difficulty = {
+      multi = {}
+    },
+    encounterid = "1807",
+    faction = {
+      multi = {}
+    },
+    pvptalent = {
+      multi = {}
+    },
+    race = {
+      multi = {}
+    },
+    role = {
+      multi = {}
+    },
+    talent = {
+      multi = {}
+    },
+    use_encounterid = true,
+    use_zone = true,
+    zone = "Halls of Valor"
+  },
+  numTriggers = 1,
+  regionType = "text",
+  trigger = {
+    custom = "function(prime, dt, event, ...)\n    if event:find(\"^SWING_\") then\n        local _, _, _, _, _, _, playerName = ...;\n        local debuff = UnitDebuff(playerName, \"Scent of Blood\");\n        \n        if debuff then\n            local msg = \"SHAME:%s:7:%s didn't move away for Scent of Blood\";\n            SendChatMessage(msg:format(playerName, playerName), \"OFFICER\");\n        end\n    end\n    return false;\nend",
+    custom_hide = "timed",
+    custom_type = "event",
+    duration = "0.1",
+    event = "Combat Log",
+    events = "COMBAT_LOG_EVENT_UNFILTERED",
+    spellName = "Crackle",
+    subeventSuffix = "_DAMAGE",
+    type = "custom",
+    unevent = "timed",
+    use_cloneId = true,
+    use_spellName = true
+  },
+  width = 6.9999208450317
+}

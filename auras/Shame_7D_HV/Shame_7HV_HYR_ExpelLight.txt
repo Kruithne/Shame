@@ -1,0 +1,45 @@
+{
+  activeTriggerMode = -10,
+  disjunctive = "all",
+  displayText = " ",
+  height = 11.99995803833,
+  id = "Shame_7HV_HYR_ExpelLight",
+  init_completed = 1,
+  load = {
+    difficulty = {
+      multi = {}
+    },
+    encounterid = "1806",
+    faction = {
+      multi = {}
+    },
+    pvptalent = {
+      multi = {}
+    },
+    race = {
+      multi = {}
+    },
+    role = {
+      multi = {}
+    },
+    talent = {
+      multi = {}
+    },
+    use_encounterid = true,
+    use_zone = true,
+    zone = "Halls of Valor"
+  },
+  numTriggers = 1,
+  regionType = "text",
+  trigger = {
+    custom = 'function(prime, dt, event, ...)\n    local _, _, _, _, _, _, playerName, _, _, _, spellName = ...;\n    \n    if spellName == "Expel Light" then\n        if event == "SPELL_AURA_REMOVED" then\n            aura_env.carrier = playerName;\n        elseif event == "SPELL_DAMAGE" then\n            local carrier = aura_env.carrier;\n            if carrier ~= playerName then\n                local msg = "SHAME:%s:5:%s hit %s with Expel Light";\n                SendChatMessage(msg:format(carrier, carrier, playerName), "OFFICER");\n            end\n        end\n    end\n    return false;\nend',
+    custom_hide = "timed",
+    custom_type = "event",
+    event = "Combat Log",
+    events = "COMBAT_LOG_EVENT_UNFILTERED",
+    type = "custom",
+    unevent = "timed",
+    use_unit = true
+  },
+  width = 6.9999208450317
+}
