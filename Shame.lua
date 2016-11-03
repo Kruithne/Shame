@@ -209,6 +209,10 @@ _M.PrintCurrentMode = function()
 	end
 end
 
+_M.RosterSort = function(a, b)
+	return a[2] > b[2];
+end
+
 _M.Command_Print = function(args)
 	local channel = _M.Validate(args[1], VALID_OUTPUT_CHANNELS);
 	if channel then
@@ -221,6 +225,7 @@ _M.Command_Print = function(args)
 
 		table_sort(rosterIndex, _M.RosterSort);
 
+		local done = false;
 		for index, node in pairs(rosterIndex) do
 			local actorWorth = node[2];
 
@@ -228,6 +233,11 @@ _M.Command_Print = function(args)
 			if actorWorth > 1 then suffix = suffix .. "s"; end
 
 			_M.MessageFormatted("%s. %s - %s Shame %s", channel, index, node[1], actorWorth, suffix);
+			done = true;
+		end
+
+		if not done then
+			_M.MessageFormatted("Nobody has any shame; good job!", channel);
 		end
 	else
 		_M.MessageFormatted("Invalid channel, use one of these: %s.", nil, _M.GetFormattedList(VALID_OUTPUT_CHANNELS));
