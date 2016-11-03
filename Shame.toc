@@ -7,3 +7,4 @@
 Shame.lua
 
 ## X-GitHub-Repo: Kruithne/Shame
+## X-Curse-Project-ID: Shame
