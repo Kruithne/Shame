@@ -12,11 +12,17 @@ This add-on is intended to track avoidable fails that your group and guild make 
 
 === Frequently Asked Questions ===
 * **How do I install this?** - Check the Installing/Usage section on this page.
-* **
+
+* **Why English only?** - In a lot of situations we filter things by the localized name rather than ID to improve performance (strange, but true) or because some things use the same ID but we want to track multiple of them. The first thing written on this page once again applies here.
+
 * **Why is WeakAuras2 required?** - We took the approach of using WeakAuras2 to trigger the shame to allow in-game customization of the triggers on-the-fly without needing to re-code or reload anything. It also allows for people to share their own triggers to work with this add-on without us releasing and maintaining them.
+
 * **Do I need to install every single aura in the folders?** - No. If you're after, for example, the Halls of Valor dungeon, just import the text inside Shame_7D_HV. Every aura has a folder with it which contains the auras split up and in Lua form; this is for development purposes (or if you just want one specific trigger, for some reason).
+
 * **Something doesn't give Shame and I think it should...** - Create a WeakAura to trigger Shame. Check the default ones for a reference on how to do that. If you think it's awesome, feel free to submit it as a PR to the GitHub project and if it's good, we'll bundle it with the add-on.
+
 * **This add-on spams too much!** - You can mute the output, check the command reference.
+
 * **There's no aura file for...?** - We only create aura files for encounters we'll be running on a serious level in our dungeon group. It also takes us a while to gather the needed information to properly distribute shame for certain encounters, so there may be a delay on new content. Feel free to create your own encounter triggers and share them on the GitHub page as a PR.
 
 === Installing/Usage ===
