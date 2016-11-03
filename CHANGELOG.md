@@ -1,2 +1,2 @@
 ** Version 1.0 **
-* In the beginning, there was .. not much.
+* [Legion] [Dungeon] Triggers for Halls of Valor bundled with add-on.
