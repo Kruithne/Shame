@@ -6,11 +6,13 @@ This project is open-source and maintained on GitHub here: https://github.com/Kr
 
 This add-on is intended to track avoidable fails that your group and guild make in a leader-board fashion.
 
+**This add-on requires WeakAuras 2 in order to work**
 
-**This add-on requires WeakAuras 2 in order to work.**
+**Default triggers bundled with this add-on will only work on English clients. If you need them to work on a different localization, please modify them or create your own triggers.**
 
 === Frequently Asked Questions ===
 * **How do I install this?** - Check the Installing/Usage section on this page.
+* **
 * **Why is WeakAuras2 required?** - We took the approach of using WeakAuras2 to trigger the shame to allow in-game customization of the triggers on-the-fly without needing to re-code or reload anything. It also allows for people to share their own triggers to work with this add-on without us releasing and maintaining them.
 * **Do I need to install every single aura in the folders?** - No. If you're after, for example, the Halls of Valor dungeon, just import the text inside Shame_7D_HV. Every aura has a folder with it which contains the auras split up and in Lua form; this is for development purposes (or if you just want one specific trigger, for some reason).
 * **Something doesn't give Shame and I think it should...** - Create a WeakAura to trigger Shame. Check the default ones for a reference on how to do that. If you think it's awesome, feel free to submit it as a PR to the GitHub project and if it's good, we'll bundle it with the add-on.
