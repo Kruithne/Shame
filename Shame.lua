@@ -79,6 +79,7 @@ end
 
 _M.AddShame = function(actorName, worth, reason, ...)
 	if not _M.tracking then return; end
+	if not UnitIsPlayer(actorName) then return; end
 
 	local baseMessage = string_format(reason, ...);
 	local newWorth = (_M.boardGroup[actorName] or 0) + worth;
@@ -241,13 +242,13 @@ _M.Command_Print = function(args)
 end
 
 _M.ChatHook = function(self, message)
-	if message:find("^SHAME:") then
+	if message:find("SHAME:") then
 		if _M.tracking then
-			local target, worth, reason = message:match("^SHAME:(.+):(%d+):(.+)$");
+			local target, worth, reason = message:match("SHAME:(.+):([%d%+%-]+):(.+)$");
 			_M.AddShame(target, tonumber(worth), reason);
 		end
 
-		ChatFrame1:RemoveMessagesByPredicate(function(text) return text:find("^SHAME:"); end);
+		ChatFrame1:RemoveMessagesByPredicate(function(text) return text:find("SHAME:"); end);
 	end
 end
 
