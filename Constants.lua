@@ -7,5 +7,7 @@ do
 		CHAT_PREFIX = "|cffff996f[Shame]|r |cffaeebff%s|r",
 		FORMAT_COMMAND = "/shame %s|cfff58cba%s|r",
 		FORMAT_COMMAND_FULL = "  /shame %s|cfff58cba%s|r - |cffabd473%s|r",
+
+		LIST_FORMAT = "|cffabd473%s|r",
 	};
 end

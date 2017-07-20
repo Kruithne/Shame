@@ -291,7 +291,7 @@ do
 			items[#items + 1] = item;
 		end
 
-		return string_format("|cffabd473%s|r", table_concat(items, ", "));
+		return Shame.LIST_FORMAT:format(table_concat(items, ", "));
 	end
 
 	--[[
