@@ -13,13 +13,6 @@ do
 	local string_len = string.len;
 
 	-- [[ Constants ]] --
-	local ADDON_NAME = "Shame";
-	local ADDON_NAME_LOWER = ADDON_NAME:lower();
-
-	local FORMAT_COMMAND = string_format("/%s %%s|cfff58cba%%s|r", ADDON_NAME_LOWER);
-	local FORMAT_COMMAND_FULL = string_format("  /%s %%s|cfff58cba%%s|r - |cffabd473%%s|r", ADDON_NAME_LOWER);
-	local FORMAT_COMMAND_SYNTAX = string_format(": |cffabd473/%s %%s|r|cfff58cba%%s|r", ADDON_NAME_LOWER);
-
 	local VALID_OUTPUT_CHANNELS = { ["guild"] = true, ["instance"] = true, ["officer"] = true, ["party"] = true, ["raid"] = true };
 	local VALID_MODES = { ["all"] = true, ["silent"] = true, ["self"] = true };
 
@@ -177,7 +170,7 @@ do
 		Shame.Message(Shame.L_AVAILABLE_COMMANDS);
 		for cmd, cmdData in pairs(Shame.commandList) do
 			if not cmdData.hidden then
-				Shame.Message(FORMAT_COMMAND_FULL, nil, cmd, cmdData.usage or "", cmdData.desc);
+				Shame.Message(Shame.FORMAT_COMMAND_FULL, nil, cmd, cmdData.usage or "", cmdData.desc);
 			end
 		end
 		return true;
@@ -219,7 +212,7 @@ do
 
 			if commandNode then
 				if not commandNode.func(args) then
-					Shame.Message(Shame.L_COMMAND_SYNTAX .. FORMAT_COMMAND_SYNTAX, nil, command, commandNode.usage);
+					Shame.Message(Shame.L_COMMAND_SYNTAX .. Shame.FORMAT_COMMAND_SYNTAX, nil, command, commandNode.usage);
 				end
 			else
 				Shame.Message(Shame.L_UNKNOWN_COMMAND);
@@ -268,7 +261,7 @@ do
 
 		local command = COMMANDS[id];
 		if command then
-			return string_format(FORMAT_COMMAND, id, command.usage or "");
+			return string_format(Shame.FORMAT_COMMAND, id, command.usage or "");
 		end
 
 		return Shame.L_INVALID_COMMAND;

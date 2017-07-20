@@ -3,6 +3,10 @@ do
 	Shame.strings = {
 		ADDON_NAME = "Shame",
 		ADDON_SLUG = "shame",
+		
 		CHAT_PREFIX = "|cffff996f[Shame]|r |cffaeebff%s|r",
+		FORMAT_COMMAND = "/shame %s|cfff58cba%s|r",
+		FORMAT_COMMAND_FULL = "  /shame %s|cfff58cba%s|r - |cffabd473%s|r",
+		FORMAT_COMMAND_SYNTAX = ": |cffabd473/shame %s|r|cfff58cba%s|r",
 	};
 end
