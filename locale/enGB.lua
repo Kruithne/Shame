@@ -26,6 +26,10 @@ do
 		L_AVAILABLE_COMMANDS = "|cff3fc7ebAvailable commands:|r",
 		L_INVALID_COMMAND = "Invalid command",
 
+		L_MODE_ALL = "all",
+		L_MODE_SILENT = "silent",
+		L_MODE_SELF = "self",
+
 		L_CMD_START = "start",
 		L_CMD_STOP = "stop",
 		L_CMD_PRINT = "print",

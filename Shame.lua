@@ -14,7 +14,7 @@ do
 
 	-- [[ Constants ]] --
 	local VALID_OUTPUT_CHANNELS = { ["guild"] = true, ["instance"] = true, ["officer"] = true, ["party"] = true, ["raid"] = true };
-	local VALID_MODES = { ["all"] = true, ["silent"] = true, ["self"] = true };
+	local VALID_MODES = { [Shame.L_MODE_ALL] = true, [Shame.L_MODE_SILENT] = true, [Shame.L_MODE_SELF] = true };
 
 	-- [[ Core Container ]] --
 	local Shame = {
@@ -135,9 +135,9 @@ do
 
 		Shame.boardGroup[actor] = newWorth;
 
-		if Shame.mode == "all" or Shame.mode == "self" then
+		if Shame.mode == Shame.L_MODE_ALL or Shame.mode == Shame.L_MODE_SELF then
 			local target = nil;
-			if Shame.mode == "all" then
+			if Shame.mode == Shame.L_MODE_ALL then
 				target = Shame.modeChannel;
 			end
 
@@ -287,7 +287,7 @@ do
 		Print the current output mode to chat.
 	]]--
 	Shame.PrintCurrentMode = function()
-		if Shame.mode == "all" then
+		if Shame.mode == Shame.L_MODE_ALL then
 			Shame.Message(Shame.L_MODE_SET, nil, Shame.mode, Shame.modeChannel);
 		else
 			Shame.Message(Shame.L_MODE_SET_SIMPLE, nil, Shame.mode);
@@ -379,7 +379,7 @@ do
 	Shame.Command_SetMode = function(args)
 		local mode = Shame.Validate(args[1], VALID_MODES);
 		if mode then
-			if mode == "all" then
+			if mode == Shame.L_MODE_ALL then
 				local channel = Shame.Validate(args[2], VALID_OUTPUT_CHANNELS);
 				if channel then
 					Shame.modeChannel = channel;
