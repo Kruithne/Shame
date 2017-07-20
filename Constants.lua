@@ -6,7 +6,7 @@ do
 		CHAT_PREFIX = "|cffff996f[Shame]|r |cffaeebff%s|r",
 		FORMAT_COMMAND = "/shame %s|cfff58cba%s|r",
 		FORMAT_COMMAND_FULL = "  /shame %s|cfff58cba%s|r - |cffabd473%s|r",
-		BOARD_FORMAT = "%s. %s - %s %s",
+		BOARD_FORMAT = "%s. %s took %s damage (%s)",
 
 		LIST_FORMAT = "|cffabd473%s|r",
 
