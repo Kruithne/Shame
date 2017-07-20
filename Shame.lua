@@ -16,8 +16,6 @@ do
 	local ADDON_NAME = "Shame";
 	local ADDON_NAME_LOWER = ADDON_NAME:lower();
 
-	local FORMAT_CHAT_COLORED = string_format("|cffff996f[%s]|r |cffaeebff%%s|r", ADDON_NAME);
-	local FORMAT_CHAT_PLAIN = string_format("[%s] %%s", ADDON_NAME);
 	local FORMAT_COMMAND = string_format("/%s %%s|cfff58cba%%s|r", ADDON_NAME_LOWER);
 	local FORMAT_COMMAND_FULL = string_format("  /%s %%s|cfff58cba%%s|r - |cffabd473%%s|r", ADDON_NAME_LOWER);
 	local FORMAT_COMMAND_SYNTAX = string_format(": |cffabd473/%s %%s|r|cfff58cba%%s|r", ADDON_NAME_LOWER);
@@ -56,23 +54,16 @@ do
 			text - Message to be sent.
 			channel - Output channel, leave blank for default.
 	]]--
-	Shame.Message = function(text, channel)
+	Shame.Message = function(text, channel, ...)
+		text = text:format(...);
+
 		if not channel then
-			return DEFAULT_CHAT_FRAME:AddMessage(string_format(FORMAT_CHAT_COLORED, text));
+			-- Print message to users chat.
+			DEFAULT_CHAT_FRAME:AddMessage(Shame.CHAT_PREFIX:format(text));
+		else			
+			-- Print message to specified channel.
+			SendChatMessage(text, channel);
 		end
-		return SendChatMessage(string_format(FORMAT_CHAT_PLAIN, text), channel);
-	end
-
-	--[[
-		Shame.MessageFormatted
-		Format a message before sending it to Shame.Message
-
-			text - Message to be sent.
-			channel - Output channel, leave blank for default.
-			... - Formatting arguments.
-	]]--
-	Shame.MessageFormatted = function(text, channel, ...)
-		return Shame.Message(string_format(text, ...), channel);
 	end
 
 	--[[
@@ -157,7 +148,7 @@ do
 				target = Shame.modeChannel;
 			end
 
-			Shame.MessageFormatted(message, target);
+			Shame.Message(message, target);
 		end
 	end
 
@@ -186,7 +177,7 @@ do
 		Shame.Message(Shame.L_AVAILABLE_COMMANDS);
 		for cmd, cmdData in pairs(Shame.commandList) do
 			if not cmdData.hidden then
-				Shame.MessageFormatted(FORMAT_COMMAND_FULL, nil, cmd, cmdData.usage or "", cmdData.desc);
+				Shame.Message(FORMAT_COMMAND_FULL, nil, cmd, cmdData.usage or "", cmdData.desc);
 			end
 		end
 		return true;
@@ -228,7 +219,7 @@ do
 
 			if commandNode then
 				if not commandNode.func(args) then
-					Shame.MessageFormatted(Shame.L_COMMAND_SYNTAX .. FORMAT_COMMAND_SYNTAX, nil, command, commandNode.usage);
+					Shame.Message(Shame.L_COMMAND_SYNTAX .. FORMAT_COMMAND_SYNTAX, nil, command, commandNode.usage);
 				end
 			else
 				Shame.Message(Shame.L_UNKNOWN_COMMAND);
@@ -304,9 +295,9 @@ do
 	]]--
 	Shame.PrintCurrentMode = function()
 		if Shame.mode == "all" then
-			Shame.MessageFormatted(Shame.L_MODE_SET, nil, Shame.mode, Shame.modeChannel);
+			Shame.Message(Shame.L_MODE_SET, nil, Shame.mode, Shame.modeChannel);
 		else
-			Shame.MessageFormatted(Shame.L_MODE_SET_SIMPLE, nil, Shame.mode);
+			Shame.Message(Shame.L_MODE_SET_SIMPLE, nil, Shame.mode);
 		end
 	end
 
@@ -341,15 +332,15 @@ do
 				local actorWorth = node[2];
 				local suffix = actorWorth > 1 and Shame.L_MISTAKE_MULTI or Shame.L_MISTAKE_SINGLE;
 
-				Shame.MessageFormatted("%s. %s - %s Shame %s", channel, index, node[1], actorWorth, suffix);
+				Shame.Message("%s. %s - %s Shame %s", channel, index, node[1], actorWorth, suffix);
 				done = true;
 			end
 
 			if not done then
-				Shame.MessageFormatted(Shame.L_NO_SHAME, channel);
+				Shame.Message(Shame.L_NO_SHAME, channel);
 			end
 		else
-			Shame.MessageFormatted(Shame.L_INVALID_CHANNEL, nil, Shame.GetFormattedList(VALID_OUTPUT_CHANNELS));
+			Shame.Message(Shame.L_INVALID_CHANNEL, nil, Shame.GetFormattedList(VALID_OUTPUT_CHANNELS));
 		end
 
 		return true;
