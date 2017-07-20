@@ -2,7 +2,7 @@ do
 	local Shame = Shame;
 
 	Shame:RegisterInstance({
-		instanceID = 1041,
+		instanceID = 1477,
 		trackers = {
 			{
 				-- Used for debugging.
