@@ -12,10 +12,6 @@ do
 	local string_sub = string.sub;
 	local string_len = string.len;
 
-	-- [[ Constants ]] --
-	local VALID_OUTPUT_CHANNELS = { ["guild"] = true, ["instance"] = true, ["officer"] = true, ["party"] = true, ["raid"] = true };
-	local VALID_MODES = { [Shame.L_MODE_ALL] = true, [Shame.L_MODE_SILENT] = true, [Shame.L_MODE_SELF] = true };
-
 	-- [[ Core Container ]] --
 	local Shame = {
 		eventFrame = CreateFrame("FRAME"),
@@ -67,6 +63,22 @@ do
 		-- Create chat command.
 		_G["SLASH_SHAME1"] = "/" .. Shame.ADDON_NAME:lower();
 		SlashCmdList[Shame.ADDON_NAME:upper()] = Shame.OnCommand;
+
+		-- Create table containing valid channels.
+		Shame.validChannels = {
+			["guild"] = true,
+			["instance"] = true,
+			["officer"] = true,
+			["party"] = true,
+			["raid"] = true
+		};
+
+		-- Create table containing valid modes.
+		Shame.validModes = {
+			[Shame.L_MODE_ALL] = true,
+			[Shame.L_MODE_SILENT] = true,
+			[Shame.L_MODE_SELF] = true
+		};
 
 		-- Create command table.
 		Shame.commandList = {
@@ -309,7 +321,7 @@ do
 			args - Command arguments.
 	]]--
 	Shame.Command_Print = function(args)
-		local channel = Shame.Validate(args[1], VALID_OUTPUT_CHANNELS);
+		local channel = Shame.Validate(args[1], Shame.validChannels);
 		if channel then
 			Shame.Message(Shame.L_CURRENT_SESSION, channel);
 
@@ -333,7 +345,7 @@ do
 				Shame.Message(Shame.L_NO_SHAME, channel);
 			end
 		else
-			Shame.Message(Shame.L_INVALID_CHANNEL, nil, Shame.GetFormattedList(VALID_OUTPUT_CHANNELS));
+			Shame.Message(Shame.L_INVALID_CHANNEL, nil, Shame.GetFormattedList(Shame.validChannels));
 		end
 
 		return true;
@@ -377,14 +389,14 @@ do
 			args - Command arguments.
 	]]--
 	Shame.Command_SetMode = function(args)
-		local mode = Shame.Validate(args[1], VALID_MODES);
+		local mode = Shame.Validate(args[1], Shame.validModes);
 		if mode then
 			if mode == Shame.L_MODE_ALL then
-				local channel = Shame.Validate(args[2], VALID_OUTPUT_CHANNELS);
+				local channel = Shame.Validate(args[2], Shame.validChannels);
 				if channel then
 					Shame.modeChannel = channel;
 				else
-					Shame.Message(Shame.L_VALID_CHANNELS .. Shame.GetFormattedList(VALID_OUTPUT_CHANNELS));
+					Shame.Message(Shame.L_VALID_CHANNELS .. Shame.GetFormattedList(Shame.validChannels));
 					return false;
 				end
 			end
@@ -393,7 +405,7 @@ do
 			Shame.PrintCurrentMode();
 			return true;
 		else
-			Shame.Message(Shame.L_VALID_MODES .. Shame.GetFormattedList(VALID_MODES));
+			Shame.Message(Shame.L_VALID_MODES .. Shame.GetFormattedList(Shame.validModes));
 			return false;
 		end
 		return false;
