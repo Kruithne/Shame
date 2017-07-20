@@ -38,7 +38,7 @@ do
 		L_CMD_DESC_PRINT = "Output the current leaderboard.",
 		L_CMD_DESC_HELP = "Display available commands.",
 
-		L_CMD_MODE_HELP = " [silent|all|self] [channel]",
+		L_CMD_MODE_HELP = " [silent||all||self] [channel]",
 		L_CMD_PRINT_HELP = " [channel]",
 	});
 end
