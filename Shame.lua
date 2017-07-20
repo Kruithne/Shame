@@ -25,8 +25,6 @@ do
 	local VALID_OUTPUT_CHANNELS = { ["guild"] = true, ["instance"] = true, ["officer"] = true, ["party"] = true, ["raid"] = true };
 	local VALID_MODES = { ["all"] = true, ["silent"] = true, ["self"] = true };
 
-	local commandList;
-
 	-- [[ Core Container ]] --
 	local Shame = {
 		eventFrame = CreateFrame("FRAME"),
@@ -87,7 +85,7 @@ do
 		SlashCmdList[Shame.ADDON_NAME:upper()] = Shame.OnCommand;
 
 		-- Create command table.
-		commandList = {
+		Shame.commandList = {
 			[Shame.L_CMD_START] = { desc = Shame.L_CMD_DESC_START, func = Shame.Command_Enable },
 			[Shame.L_CMD_STOP] = { desc = Shame.L_CMD_DESC_STOP, func = Shame.Command_Disable },
 			[Shame.L_CMD_MODE] = { desc = Shame.L_CMD_DESC_MODE, usage = Shame.L_CMD_MODE_HELP, func = Shame.Command_SetMode },
@@ -186,7 +184,7 @@ do
 	]]--
 	Shame.ListCommands = function()
 		Shame.Message(Shame.L_AVAILABLE_COMMANDS);
-		for cmd, cmdData in pairs(commandList) do
+		for cmd, cmdData in pairs(Shame.commandList) do
 			if not cmdData.hidden then
 				Shame.MessageFormatted(FORMAT_COMMAND_FULL, nil, cmd, cmdData.usage or "", cmdData.desc);
 			end
@@ -210,11 +208,11 @@ do
 		if #args > 0 then
 			-- Command entered, process it.
 			local command = table_remove(args, 1);
-			local commandNode = commandList[command];
+			local commandNode = Shame.commandList[command];
 
 			if not commandNode then
 				-- No command found by index match, explore for partial.
-				for cmd, cmdData in pairs(commandList) do
+				for cmd, cmdData in pairs(Shame.commandList) do
 					if string_sub(cmd, 1, string_len(command)) == command then
 						if not commandNode then
 							-- First hit, store for possible use.
