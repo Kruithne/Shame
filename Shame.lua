@@ -3,9 +3,10 @@ do
 	local wipe = wipe;
 	local pairs = pairs;
 	local string_format = string.format;
-	local SendChatMessage = SendChatMessage;
 	local string_sub = string.sub;
 	local string_len = string.len;
+	local SendChatMessage = SendChatMessage;
+	local UnitIsPlayer = UnitIsPlayer;
 
 	-- [[ Initiate ]] --
 	local Shame = {
