@@ -141,7 +141,7 @@ do
 			self - Reference to the addon container.
 	]]--
 	Shame.OnZoneChange = function(self)
-		local _, _, difficultyID, _, _, _, _, currentMapID = GetInstanceInfo();
+		local currentMapID = select(8, GetInstanceInfo());
 		local instance = self.instances[currentMapID];
 		local currentInstance = self.currentInstance;
 
@@ -152,11 +152,8 @@ do
 
 		-- Enable a new tracker module if needed.
 		if instance then
-			local difficultyID = select(3, GetInstanceInfo());
-			if difficultyID == self.ENABLE_DIFFICULTY then
-				self:RegisterCombatNodes(instance);
-				self.currentInstance = instance;
-			end
+			self:RegisterCombatNodes(instance);
+			self.currentInstance = instance;
 		end
 	end
 
