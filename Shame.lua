@@ -60,7 +60,7 @@ do
 	]]--
 	Shame.OnLoad = function()
 		-- Assign default values.
-		Shame.mode = L_MODE_SELF;
+		Shame.currentMode = L_MODE_SELF;
 
 		-- Create chat command.
 		_G["SLASH_SHAME1"] = "/" .. Shame.ADDON_NAME:lower();
@@ -149,9 +149,9 @@ do
 
 		Shame.boardGroup[actor] = newWorth;
 
-		if Shame.mode == Shame.L_MODE_ALL or Shame.mode == Shame.L_MODE_SELF then
+		if Shame.currentMode == Shame.L_MODE_ALL or Shame.currentMode == Shame.L_MODE_SELF then
 			local target = nil;
-			if Shame.mode == Shame.L_MODE_ALL then
+			if Shame.currentMode == Shame.L_MODE_ALL then
 				target = Shame.modeChannel;
 			end
 
@@ -301,10 +301,10 @@ do
 		Print the current output mode to chat.
 	]]--
 	Shame.PrintCurrentMode = function()
-		if Shame.mode == Shame.L_MODE_ALL then
-			Shame.Message(Shame.L_MODE_SET, nil, Shame.mode, Shame.modeChannel);
+		if Shame.currentMode == Shame.L_MODE_ALL then
+			Shame.Message(Shame.L_MODE_SET, nil, Shame.currentMode, Shame.modeChannel);
 		else
-			Shame.Message(Shame.L_MODE_SET_SIMPLE, nil, Shame.mode);
+			Shame.Message(Shame.L_MODE_SET_SIMPLE, nil, Shame.currentMode);
 		end
 	end
 
@@ -403,7 +403,7 @@ do
 				end
 			end
 
-			Shame.mode = mode;
+			Shame.currentMode = mode;
 			Shame.PrintCurrentMode();
 			return true;
 		else
