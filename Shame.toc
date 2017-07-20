@@ -3,6 +3,8 @@
 ## Notes: Avoidable damage tracker for Mythic dungeons.
 ## Author: Kruithne
 ## Version: 2.0.0
+## X-GitHub-Repo: Kruithne/Shame
+## X-Curse-Project-ID: Shame
 
 Shame.lua
 Constants.lua
@@ -14,6 +16,3 @@ locale/frFR.lua
 
 CombatGenerics.lua
 encounters/7D_HallsOfValor.lua
-
-## X-GitHub-Repo: Kruithne/Shame
-## X-Curse-Project-ID: Shame
