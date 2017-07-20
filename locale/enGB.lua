@@ -25,7 +25,7 @@ do
 
 		L_VALID_MODES = "Valid modes: %s.",
 		L_MODE_SET = "Real-time shaming mode set to |cfff58cba%s|r |cffaeebffin|r |cfff58cba%s|r|cffaeebff.|r",
-		L_MODE_SET_SIMPLE = "Real-time shaming mode set to |cfff58cba%s|r |cffaeebff.",
+		L_MODE_SET_SIMPLE = "Real-time shaming mode set to |cfff58cba%s|r|cffaeebff.",
 
 		L_VALID_CHANNELS = "Valid channels: %s.",
 		L_INVALID_CHANNEL = "Invalid channel, use one of these: %s!",
