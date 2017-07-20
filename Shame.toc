@@ -1,6 +1,6 @@
 ## Interface: 70200
 ## Title: Shame
-## Notes: Track who sucks in your group/guild.
+## Notes: Avoidable damage tracker for Mythic dungeons.
 ## Author: Kruithne
 ## Version: 2.0.0
 ## SavedVariables: ShameData
