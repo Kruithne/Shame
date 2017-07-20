@@ -19,7 +19,7 @@ do
 		L_MODE_SET_SIMPLE = "Real-time shaming mode set to |cfff58cba%s|r |cffaeebff.",
 
 		L_VALID_CHANNELS = "Valid channels: ",
-		L_INVALID_CHANNEL = "Invalid channel, use one of these: %s",
+		L_INVALID_CHANNEL = "Invalid channel, use one of these: %s!",
 
 		L_COMMAND_SYNTAX = "Command syntax: |cffabd473/shame %s|r|cfff58cba%s|r",
 		L_UNKNOWN_COMMAND = "Unknown command. Try '/shame help' for available commands.",
@@ -38,7 +38,7 @@ do
 
 		L_CMD_DESC_START = "Start a monitoring session.",
 		L_CMD_DESC_STOP = "Stop a monitoring session.",
-		L_CMD_DESC_MODE = "Set the mode for real-time shaming",
+		L_CMD_DESC_MODE = "Set the mode for real-time shaming.",
 		L_CMD_DESC_PRINT = "Output the current leaderboard.",
 		L_CMD_DESC_HELP = "Display available commands.",
 
