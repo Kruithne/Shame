@@ -360,7 +360,7 @@ do
 			Shame.Message(Shame.L_NEW_SESSION);
 			Shame.PrintCurrentMode();
 		else
-			Shame.Message(Shame.L_ALREADY_RUNNING .. Shame.GetCommandFormat("stop"));
+			Shame.Message(Shame.L_ALREADY_RUNNING .. Shame.GetCommandFormat(Shame.L_CMD_STOP));
 		end
 
 		return true;
@@ -375,7 +375,7 @@ do
 			Shame.Disable();
 			Shame.Message(Shame.L_STOPPED);
 		else
-			Shame.Message(Shame.L_NOT_STARTED .. Shame.GetCommandFormat("start"));
+			Shame.Message(Shame.L_NOT_STARTED .. Shame.GetCommandFormat(Shame.L_CMD_START));
 		end
 
 		return true;
