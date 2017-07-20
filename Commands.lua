@@ -138,7 +138,7 @@ do
 				local actorWorth = node[2];
 				local suffix = actorWorth > 1 and self.L_MISTAKE_MULTI or self.L_MISTAKE_SINGLE;
 
-				self:Message("%s. %s - %s Shame %s", channel, index, node[1], actorWorth, suffix);
+				self:Message(self.BOARD_FORMAT, channel, index, node[1], actorWorth, suffix);
 				done = true;
 			end
 
