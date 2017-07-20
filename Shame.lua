@@ -63,7 +63,7 @@ do
 			DEFAULT_CHAT_FRAME:AddMessage(self.CHAT_PREFIX:format(text));
 		else			
 			-- Print message to specified channel.
-			SendChatMessage(text, channel);
+			SendChatMessage(text, self.validChannels[channel]);
 		end
 	end
 
@@ -83,11 +83,11 @@ do
 
 		-- Create table containing valid channels.
 		self.validChannels = {
-			["guild"] = true,
-			["instance"] = true,
-			["officer"] = true,
-			["party"] = true,
-			["raid"] = true
+			["guild"] = "GUILD",
+			["instance"] = "INSTANCE_CHAT",
+			["officer"] = "OFFICER",
+			["party"] = "PARTY",
+			["raid"] = "RAID"
 		};
 
 		-- Create table containing valid modes.
