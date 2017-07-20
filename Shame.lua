@@ -1,26 +1,22 @@
 do
 	-- [[ Optimization ]] --
-	local type = type;
 	local wipe = wipe;
 	local pairs = pairs;
-	local table_sort = table.sort;
-	local table_concat = table.concat;
-	local table_remove = table.remove;
 	local string_format = string.format;
 	local SendChatMessage = SendChatMessage;
-	local string_gmatch = string.gmatch;
 	local string_sub = string.sub;
 	local string_len = string.len;
 
-	-- [[ Core Container ]] --
-	local Shame = {
-		eventFrame = CreateFrame("FRAME"),
-		eventHandlers = {}, -- Stores assigned event handlers.
+	-- [[ Initiate ]] --
+	local _S = {
 		tracking = false, -- Flag for tracking state.
 		boardGroup = {},
 		strings = {}, -- Localized strings.
 		modeChannel = "party", -- Real-time shaming channel.
-	};
+	}; Shame = _S;
+
+	-- Add feed-through to strings table for localization.
+	setmetatable(_S, { __index = function(t, k) return t.strings[k]; end });
 
 	--[[
 		Shame.ApplyLocalization
@@ -28,8 +24,8 @@ do
 
 			locale - Localization table.
 	]]--
-	Shame.ApplyLocalization = function(locale)
-		local strings = Shame.strings;
+	_S.ApplyLocalization = function(locale)
+		local strings = _S.strings;
 		for key, str in pairs(locale) do
 			strings[key] = str;
 		end
@@ -42,12 +38,12 @@ do
 			text - Message to be sent.
 			channel - Output channel, leave blank for default.
 	]]--
-	Shame.Message = function(text, channel, ...)
+	_S.Message = function(text, channel, ...)
 		text = text:format(...);
 
 		if not channel then
 			-- Print message to users chat.
-			DEFAULT_CHAT_FRAME:AddMessage(Shame.CHAT_PREFIX:format(text));
+			DEFAULT_CHAT_FRAME:AddMessage(_S.CHAT_PREFIX:format(text));
 		else			
 			-- Print message to specified channel.
 			SendChatMessage(text, channel);
@@ -58,16 +54,16 @@ do
 		Shame.OnLoad
 		Invoked when the addon is loaded.
 	]]--
-	Shame.OnLoad = function()
+	_S.OnLoad = function()
 		-- Assign default values.
-		Shame.currentMode = Shame.L_MODE_SELF;
+		_S.currentMode = _S.L_MODE_SELF;
 
 		-- Create chat command.
-		_G["SLASH_SHAME1"] = "/" .. Shame.ADDON_NAME:lower();
-		SlashCmdList[Shame.ADDON_NAME:upper()] = Shame.OnCommand;
+		_G["SLASH_SHAME1"] = "/" .. _S.ADDON_NAME:lower();
+		SlashCmdList[_S.ADDON_NAME:upper()] = _S.OnCommand;
 
 		-- Create table containing valid channels.
-		Shame.validChannels = {
+		_S.validChannels = {
 			["guild"] = true,
 			["instance"] = true,
 			["officer"] = true,
@@ -76,62 +72,24 @@ do
 		};
 
 		-- Create table containing valid modes.
-		Shame.validModes = {
-			[Shame.L_MODE_ALL] = true,
-			[Shame.L_MODE_SILENT] = true,
-			[Shame.L_MODE_SELF] = true
+		_S.validModes = {
+			[_S.L_MODE_ALL] = true,
+			[_S.L_MODE_SILENT] = true,
+			[_S.L_MODE_SELF] = true
 		};
 
 		-- Create command table.
-		Shame.commandList = {
-			[Shame.L_CMD_START] = { desc = Shame.L_CMD_DESC_START, func = Shame.Command_Enable },
-			[Shame.L_CMD_STOP] = { desc = Shame.L_CMD_DESC_STOP, func = Shame.Command_Disable },
-			[Shame.L_CMD_MODE] = { desc = Shame.L_CMD_DESC_MODE, usage = Shame.L_CMD_MODE_HELP, func = Shame.Command_SetMode },
-			[Shame.L_CMD_PRINT] = { desc = Shame.L_CMD_DESC_PRINT, usage = Shame.L_CMD_PRINT_HELP, func = Shame.Command_Print },
-			[Shame.L_CMD_HELP] = { desc = Shame.L_CMD_DESC_HELP, func = Shame.ListCommands },
-			["?"] = { hidden = true, func = Shame.ListCommands },
+		_S.commandList = {
+			[_S.L_CMD_START] = { desc = _S.L_CMD_DESC_START, func = _S.Command_Enable },
+			[_S.L_CMD_STOP] = { desc = _S.L_CMD_DESC_STOP, func = _S.Command_Disable },
+			[_S.L_CMD_MODE] = { desc = _S.L_CMD_DESC_MODE, usage = _S.L_CMD_MODE_HELP, func = _S.Command_SetMode },
+			[_S.L_CMD_PRINT] = { desc = _S.L_CMD_DESC_PRINT, usage = _S.L_CMD_PRINT_HELP, func = _S.Command_Print },
+			[_S.L_CMD_HELP] = { desc = _S.L_CMD_DESC_HELP, func = _S.ListCommands },
+			["?"] = { hidden = true, func = _S.ListCommands },
 		};
 
 		-- Print loaded message.
-		Shame.Message(Shame.L_LOADED:format(GetAddOnMetadata(Shame.ADDON_NAME, "Version")));
-	end
-
-	--[[
-		Shame.OnEvent
-		Invoked when a registered event occurred.
-	]]--
-	Shame.OnEvent = function(self, event, ...)
-		local handler = Shame.eventHandlers[event];
-		if handler then handler(...); end
-	end
-
-	--[[
-		Shame.SetEventHandler
-		Register an event handler.
-
-			event - Identifer for the event.
-			handler - Function to handle the callback.
-	]]--
-	Shame.SetEventHandler = function(event, handler)
-		if type(event) == "table" then
-			for key, value in pairs(event) do
-				Shame.SetEventHandler(key, value);
-			end
-		else
-			Shame.eventFrame:RegisterEvent(event);
-			Shame.eventHandlers[event] = handler;
-		end
-	end
-
-	--[[
-		Shame.RemoveEventHandler
-		Unregister an existing event handler.
-
-			event - Identifer for the event.
-	]]--
-	Shame.RemoveEventHandler = function(event)
-		Shame.eventFrame:UnregisterEvent(event);
-		Shame.eventHandlers[event] = nil;
+		_S.Message(_S.L_LOADED:format(GetAddOnMetadata(_S.ADDON_NAME, "Version")));
 	end
 
 	--[[
@@ -141,21 +99,21 @@ do
 			actor - Name of the actor.
 			message - Message to display for this mistake.
 	]]--
-	Shame.RegisterMistake = function(actor, message)
-		if not Shame.tracking then return; end
+	_S.RegisterMistake = function(actor, message)
+		if not _S.tracking then return; end
 		if not UnitIsPlayer(actor) then return; end
 
-		local newWorth = (Shame.boardGroup[actor] or 0) + 1;
+		local newWorth = (_S.boardGroup[actor] or 0) + 1;
 
-		Shame.boardGroup[actor] = newWorth;
+		_S.boardGroup[actor] = newWorth;
 
-		if Shame.currentMode == Shame.L_MODE_ALL or Shame.currentMode == Shame.L_MODE_SELF then
+		if _S.currentMode == _S.L_MODE_ALL or _S.currentMode == _S.L_MODE_SELF then
 			local target = nil;
-			if Shame.currentMode == Shame.L_MODE_ALL then
-				target = Shame.modeChannel;
+			if _S.currentMode == _S.L_MODE_ALL then
+				target = _S.modeChannel;
 			end
 
-			Shame.Message(message, target);
+			_S.Message(message, target);
 		end
 	end
 
@@ -163,78 +121,17 @@ do
 		Shame.Enable
 		Enable the shaming.
 	]]--
-	Shame.Enable = function()
-		Shame.tracking = true;
-		wipe(Shame.boardGroup);
+	_S.Enable = function()
+		_S.tracking = true;
+		wipe(_S.boardGroup);
 	end
 
 	--[[
 		Shame.Disable
 		Disable the shaming.
 	]]--
-	Shame.Disable = function()
-		Shame.tracking = false;
-	end
-
-	--[[
-		Shame.ListCommands
-		List all available commands.
-	]]--
-	Shame.ListCommands = function()
-		Shame.Message(Shame.L_AVAILABLE_COMMANDS);
-		for cmd, cmdData in pairs(Shame.commandList) do
-			if not cmdData.hidden then
-				Shame.Message(Shame.FORMAT_COMMAND_FULL, nil, cmd, cmdData.usage or "", cmdData.desc);
-			end
-		end
-		return true;
-	end
-
-	--[[
-		Shame.OnCommand
-		Invoked when a command is executed.
-
-			text - The input of the user.
-			editbox - Which region the command was executed from.
-	]]--
-	Shame.OnCommand = function(text, editbox)
-		local args = {};
-		for arg in string_gmatch(text, "%S+") do
-			args[#args + 1] = arg:lower();
-		end
-
-		if #args > 0 then
-			-- Command entered, process it.
-			local command = table_remove(args, 1);
-			local commandNode = Shame.commandList[command];
-
-			if not commandNode then
-				-- No command found by index match, explore for partial.
-				for cmd, cmdData in pairs(Shame.commandList) do
-					if string_sub(cmd, 1, string_len(command)) == command then
-						if not commandNode then
-							-- First hit, store for possible use.
-							commandNode = cmdData;
-						else
-							-- Multiple hits, abandon partial search.
-							commandNode = nil;
-							break;
-						end
-					end
-				end
-			end
-
-			if commandNode then
-				if not commandNode.func(args) then
-					Shame.Message(Shame.L_COMMAND_SYNTAX, nil, command, commandNode.usage);
-				end
-			else
-				Shame.Message(Shame.L_UNKNOWN_COMMAND);
-			end
-		else
-			-- No command entered, display available commands.
-			Shame.ListCommands();
-		end
+	_S.Disable = function()
+		_S.tracking = false;
 	end
 
 	--[[
@@ -244,7 +141,7 @@ do
 			input - Value to check for.
 			pool - Table to check inside.
 	]]--
-	Shame.Validate = function(input, pool)
+	_S.Validate = function(input, pool)
 		if not input then
 			return false;
 		end
@@ -265,171 +162,14 @@ do
 	end
 
 	--[[
-		Shame.GetCommandFormat
-		Format the syntax of a command.
-
-			id - ID of the command.
-	]]--
-	Shame.GetCommandFormat = function(id)
-		id = id:lower();
-
-		local command = COMMANDS[id];
-		if command then
-			return string_format(Shame.FORMAT_COMMAND, id, command.usage or "");
-		end
-
-		return Shame.L_INVALID_COMMAND;
-	end
-
-	--[[
-		Shame.GetFormattedList
-		Get a formatted list of table values.
-
-			pool - Values to format.
-	]]--
-	Shame.GetFormattedList = function(pool)
-		local items = {};
-		for item, _ in pairs(pool) do
-			items[#items + 1] = item;
-		end
-
-		return Shame.LIST_FORMAT:format(table_concat(items, ", "));
-	end
-
-	--[[
 		Shame.PrintCurrentMode
 		Print the current output mode to chat.
 	]]--
-	Shame.PrintCurrentMode = function()
-		if Shame.currentMode == Shame.L_MODE_ALL then
-			Shame.Message(Shame.L_MODE_SET, nil, Shame.currentMode, Shame.modeChannel);
+	_S.PrintCurrentMode = function()
+		if _S.currentMode == _S.L_MODE_ALL then
+			_S.Message(_S.L_MODE_SET, nil, _S.currentMode, _S.modeChannel);
 		else
-			Shame.Message(Shame.L_MODE_SET_SIMPLE, nil, Shame.currentMode);
+			_S.Message(_S.L_MODE_SET_SIMPLE, nil, _S.currentMode);
 		end
 	end
-
-	--[[
-		Shame.RosterSort
-		Sorting function for roster ordering.
-	]]--
-	Shame.RosterSort = function(a, b)
-		return a[2] > b[2];
-	end
-
-	--[[
-		Shame.Command_Print
-		Handler for the 'print' command.
-
-			args - Command arguments.
-	]]--
-	Shame.Command_Print = function(args)
-		local channel = Shame.Validate(args[1], Shame.validChannels);
-		if channel then
-			Shame.Message(Shame.L_CURRENT_SESSION, channel);
-
-			local rosterIndex = {};
-			for actorName, actorWorth in pairs(Shame.boardGroup) do
-				rosterIndex[#rosterIndex + 1] = {actorName, actorWorth};
-			end
-
-			table_sort(rosterIndex, Shame.RosterSort);
-
-			local done = false;
-			for index, node in pairs(rosterIndex) do
-				local actorWorth = node[2];
-				local suffix = actorWorth > 1 and Shame.L_MISTAKE_MULTI or Shame.L_MISTAKE_SINGLE;
-
-				Shame.Message("%s. %s - %s Shame %s", channel, index, node[1], actorWorth, suffix);
-				done = true;
-			end
-
-			if not done then
-				Shame.Message(Shame.L_NO_SHAME, channel);
-			end
-		else
-			Shame.Message(Shame.L_INVALID_CHANNEL, nil, Shame.GetFormattedList(Shame.validChannels));
-		end
-
-		return true;
-	end
-
-	--[[
-		Shame.Command_Enable
-		Handler for the 'enable' command.
-	]]--
-	Shame.Command_Enable = function()
-		if not Shame.tracking then
-			Shame.Enable();
-			Shame.Message(Shame.L_NEW_SESSION);
-			Shame.PrintCurrentMode();
-		else
-			Shame.Message(Shame.L_ALREADY_RUNNING .. Shame.GetCommandFormat(Shame.L_CMD_STOP));
-		end
-
-		return true;
-	end
-
-	--[[
-		Shame.Command_Disable
-		Handler for the 'disable' command.
-	]]--
-	Shame.Command_Disable = function()
-		if Shame.tracking then
-			Shame.Disable();
-			Shame.Message(Shame.L_STOPPED);
-		else
-			Shame.Message(Shame.L_NOT_STARTED .. Shame.GetCommandFormat(Shame.L_CMD_START));
-		end
-
-		return true;
-	end
-
-	--[[
-		Shame.Command_SetMode
-		Handler for the 'mode' command.
-
-			args - Command arguments.
-	]]--
-	Shame.Command_SetMode = function(args)
-		local mode = Shame.Validate(args[1], Shame.validModes);
-		if mode then
-			if mode == Shame.L_MODE_ALL then
-				local channel = Shame.Validate(args[2], Shame.validChannels);
-				if channel then
-					Shame.modeChannel = channel;
-				else
-					Shame.Message(Shame.L_VALID_CHANNELS, nil, Shame.GetFormattedList(Shame.validChannels));
-					return false;
-				end
-			end
-
-			Shame.currentMode = mode;
-			Shame.PrintCurrentMode();
-			return true;
-		else
-			Shame.Message(Shame.L_VALID_MODES, nil, Shame.GetFormattedList(Shame.validModes));
-			return false;
-		end
-		return false;
-	end
-
-	--[[
-		Shame.OnEvent_AddonLoaded
-		Invoked when the ADDON_LOADED event triggers.
-	]]--
-	Shame.OnEvent_AddonLoaded = function(addonName)
-		if addonName == Shame.ADDON_NAME then
-			Shame.RemoveEventHandler("ADDON_LOADED");
-			Shame.OnLoad();
-		end
-	end
-
-	-- [[ Initial Set-up ]] --
-
-	-- Initiate event handling.
-	Shame.eventFrame:SetScript("OnEvent", Shame.OnEvent);
-	Shame.SetEventHandler("ADDON_LOADED", Shame.OnEvent_AddonLoaded);
-
-	_G["Shame"] = Shame; -- Expose reference globally.
-	setmetatable(Shame, { __index = function(t, k) return t.strings[k]; end }); -- Localization.
 end

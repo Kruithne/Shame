@@ -7,6 +7,9 @@
 
 Shame.lua
 Constants.lua
+Events.lua
+Commands.lua
+
 locale/enGB.lua
 locale/frFR.lua
 
