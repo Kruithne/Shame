@@ -2,7 +2,7 @@
 ## Title: Shame
 ## Notes: Track who sucks in your group/guild.
 ## Author: Kruithne
-## Version: 2.0
+## Version: 2.0.0
 ## SavedVariables: ShameData
 
 Shame.lua
