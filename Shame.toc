@@ -3,7 +3,6 @@
 ## Notes: Avoidable damage tracker for Mythic dungeons.
 ## Author: Kruithne
 ## Version: 2.0.0
-## SavedVariables: ShameData
 
 Shame.lua
 Constants.lua
