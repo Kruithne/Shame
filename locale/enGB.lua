@@ -1,9 +1,9 @@
 do
-	-- Rather than applying the English localization, we initialize
-	-- the entire strings table using it, for use as a default.
-	Shame.strings = {
+	-- We don't check for the locale here, since the enGB localization will be used
+	-- as the default fallback for missing strings in other locale.
+	Shame.ApplyLocalization({
 		L_LOADED = "Loaded v",
-		
+
 		L_CURRENT_SESSION = "Shame for current session:",
 		L_MISTAKE_SINGLE = "Mistake",
 		L_MISTAKE_MULTI= "Mistakes",
@@ -40,5 +40,5 @@ do
 
 		L_CMD_MODE_HELP = " [silent|all|self] [channel]",
 		L_CMD_PRINT_HELP = " [channel]",
-	};
+	});
 end

@@ -6,6 +6,7 @@
 ## SavedVariables: ShameData
 
 Shame.lua
+Constants.lua
 locale/enGB.lua
 locale/frFR.lua
 
