@@ -178,7 +178,7 @@ do
 		List all available commands.
 	]]--
 	Shame.ListCommands = function()
-		Shame.Message("|cff3fc7ebAvailable commands:|r");
+		Shame.Message(Shame.L_AVAILABLE_COMMANDS);
 		for cmd, cmdData in pairs(commandList) do
 			if not cmdData.hidden then
 				Shame.MessageFormatted(FORMAT_COMMAND_FULL, nil, cmd, cmdData.usage or "", cmdData.desc);
