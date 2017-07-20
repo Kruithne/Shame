@@ -14,11 +14,11 @@ do
 		L_NEW_SESSION = "Started new shaming session.",
 		L_STOPPED = "Stopped shaming session.",
 
-		L_VALID_MODES = "Valid modes: ",
+		L_VALID_MODES = "Valid modes: %s.",
 		L_MODE_SET = "Real-time shaming mode set to |cfff58cba%s|r |cffaeebffin|r |cfff58cba%s|r|cffaeebff.|r",
 		L_MODE_SET_SIMPLE = "Real-time shaming mode set to |cfff58cba%s|r |cffaeebff.",
 
-		L_VALID_CHANNELS = "Valid channels: ",
+		L_VALID_CHANNELS = "Valid channels: %s.",
 		L_INVALID_CHANNEL = "Invalid channel, use one of these: %s!",
 
 		L_COMMAND_SYNTAX = "Command syntax: |cffabd473/shame %s|r|cfff58cba%s|r",

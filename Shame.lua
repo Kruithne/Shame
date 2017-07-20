@@ -396,7 +396,7 @@ do
 				if channel then
 					Shame.modeChannel = channel;
 				else
-					Shame.Message(Shame.L_VALID_CHANNELS .. Shame.GetFormattedList(Shame.validChannels));
+					Shame.Message(Shame.L_VALID_CHANNELS, nil, Shame.GetFormattedList(Shame.validChannels));
 					return false;
 				end
 			end
@@ -405,7 +405,7 @@ do
 			Shame.PrintCurrentMode();
 			return true;
 		else
-			Shame.Message(Shame.L_VALID_MODES .. Shame.GetFormattedList(Shame.validModes));
+			Shame.Message(Shame.L_VALID_MODES, nil, Shame.GetFormattedList(Shame.validModes));
 			return false;
 		end
 		return false;
