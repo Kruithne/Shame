@@ -12,11 +12,11 @@ do
 			... - Combat arguments.
 	]]--
 	Shame.CombatGeneric_Heal = function(self, node, ...)
-		local playerName, spellName = (select(5, ...)), (select(13, ...));
+		local playerName, spellName, healAmount = (select(5, ...)), (select(13, ...)), ((select(15, ...)));
 		local spellID = select(7, GetSpellInfo(spellName));
 
 		if spellID == node.spellID then
-			self:RegisterMistake(playerName, "%s healed themself with %s!", playerName, spellName);
+			self:RegisterMistake(playerName, healAmount, "%s healed themself with %s! (%s)", playerName, spellName, healAmount);
 		end
 	end
 end

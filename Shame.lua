@@ -144,7 +144,7 @@ do
 		-- Enable a new tracker module if needed.
 		if instance then
 			local difficultyID = select(3, GetInstanceInfo());
-			if difficultyID == self.ENABLE_DIFFICULTY and not self.isDebugging then
+			if difficultyID == self.ENABLE_DIFFICULTY then
 				self:RegisterCombatNodes(instance);
 				self.currentInstance = instance;
 			end
@@ -190,10 +190,11 @@ do
 
 			self - Reference to the addon container.
 			actor - Name of the actor.
+			damage - Avoidable damage this mistake cost.
 			message - Message to display for this mistake.
 			... - String formatting arguments.
 	]]--
-	Shame.RegisterMistake = function(self, actor, message, ...)
+	Shame.RegisterMistake = function(self, actor, damage, message, ...)
 		if not self.tracking then
 			-- Prevent mistakes being registered outside a session.
 			return;
@@ -204,9 +205,14 @@ do
 			return;
 		end
 
-		local newWorth = (self.boardGroup[actor] or 0) + 1;
+		local node = self.boardGroup[actor];
+		if not node then
+			node = { name = actor };
+			self.boardGroup[actor] = node;
+		end
 
-		self.boardGroup[actor] = newWorth;
+		node.mistakes = (node.mistakes or 0) + 1;
+		node.damage = (node.damage or 0) + (damage or 0);
 
 		if self.currentMode == self.L_MODE_ALL or self.currentMode == self.L_MODE_SELF then
 			local target = nil;

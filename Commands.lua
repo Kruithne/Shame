@@ -2,6 +2,7 @@ do
 	-- [[ Local Optimization ]] --
 	local Shame = Shame;
 	local pairs = pairs;
+	local unpack = unpack;
 	local table_sort = table.sort;
 	local string_len = string.len;
 	local table_remove = table.remove;
@@ -127,18 +128,16 @@ do
 			self:Message(self.L_CURRENT_SESSION, channel);
 
 			local rosterIndex = {};
-			for actorName, actorWorth in pairs(self.boardGroup) do
-				rosterIndex[#rosterIndex + 1] = {actorName, actorWorth};
+			for actorName, actorData in pairs(self.boardGroup) do
+				rosterIndex[#rosterIndex + 1] = actorData;
 			end
 
 			table_sort(rosterIndex, self.RosterSort);
 
 			local done = false;
-			for index, node in pairs(rosterIndex) do
-				local actorWorth = node[2];
-				local suffix = actorWorth > 1 and self.L_MISTAKE_MULTI or self.L_MISTAKE_SINGLE;
-
-				self:Message(self.BOARD_FORMAT, channel, index, node[1], actorWorth, suffix);
+			for index, actor in pairs(rosterIndex) do
+				local suffix = actor.mistakes > 1 and self.L_MISTAKE_MULTI or self.L_MISTAKE_SINGLE;
+				self:Message(self.BOARD_FORMAT, channel, index, actor.name, actor.damage or 0, suffix:format(actor.mistakes));
 				done = true;
 			end
 

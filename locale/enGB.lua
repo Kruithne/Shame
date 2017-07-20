@@ -5,8 +5,8 @@ do
 		L_LOADED = "Loaded v%s",
 
 		L_CURRENT_SESSION = "Shame for current session:",
-		L_MISTAKE_SINGLE = "Mistake",
-		L_MISTAKE_MULTI= "Mistakes",
+		L_MISTAKE_SINGLE = "%s Mistake",
+		L_MISTAKE_MULTI= "%s Mistakes",
 		L_NO_SHAME = "Nobody has any shame; good job!",
 
 		L_ALREADY_RUNNING = "Already shaming; to stop, run: |cffabd473",
