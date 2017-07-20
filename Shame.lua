@@ -82,6 +82,11 @@ do
 		Invoked when the addon is loaded.
 	]]--
 	Shame.OnLoad = function()
+		-- Create chat command.
+		_G["SLASH_SHAME1"] = "/" .. Shame.ADDON_NAME:lower();
+		SlashCmdList[Shame.ADDON_NAME:upper()] = Shame.OnCommand;
+
+		-- Create command table.
 		commandList = {
 			[Shame.L_CMD_START] = { desc = Shame.L_CMD_DESC_START, func = Shame.Command_Enable },
 			[Shame.L_CMD_STOP] = { desc = Shame.L_CMD_DESC_STOP, func = Shame.Command_Disable },
@@ -90,7 +95,9 @@ do
 			[Shame.L_CMD_HELP] = { desc = Shame.L_CMD_DESC_HELP, func = Shame.ListCommands },
 			["?"] = { hidden = true, func = Shame.ListCommands },
 		};
-		Shame.Message("Loaded v" .. GetAddOnMetadata(Shame.ADDON_NAME, "Version"));
+
+		-- Print loaded message.
+		Shame.Message(Shame.L_LOADED:format(GetAddOnMetadata(Shame.ADDON_NAME, "Version")));
 	end
 
 	--[[
@@ -426,10 +433,6 @@ do
 	-- Initiate event handling.
 	Shame.eventFrame:SetScript("OnEvent", Shame.OnEvent);
 	Shame.SetEventHandler("ADDON_LOADED", Shame.OnEvent_AddonLoaded);
-
-	-- Create chat command.
-	SLASH_SHAME1 = "/" .. Shame.ADDON_NAME:lower();
-	SlashCmdList[Shame.ADDON_NAME:upper()] = Shame.OnCommand;
 
 	_G["Shame"] = Shame; -- Expose reference globally.
 	setmetatable(Shame, { __index = function(t, k) return t.strings[k]; end }); -- Localization.

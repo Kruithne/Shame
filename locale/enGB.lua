@@ -2,7 +2,7 @@ do
 	-- We don't check for the locale here, since the enGB localization will be used
 	-- as the default fallback for missing strings in other locale.
 	Shame.ApplyLocalization({
-		L_LOADED = "Loaded v",
+		L_LOADED = "Loaded v%s",
 
 		L_CURRENT_SESSION = "Shame for current session:",
 		L_MISTAKE_SINGLE = "Mistake",
