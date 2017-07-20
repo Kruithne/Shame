@@ -60,7 +60,7 @@ do
 	]]--
 	Shame.OnLoad = function()
 		-- Assign default values.
-		Shame.currentMode = L_MODE_SELF;
+		Shame.currentMode = Shame.L_MODE_SELF;
 
 		-- Create chat command.
 		_G["SLASH_SHAME1"] = "/" .. Shame.ADDON_NAME:lower();
