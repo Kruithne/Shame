@@ -144,7 +144,7 @@ do
 		-- Enable a new tracker module if needed.
 		if instance then
 			local difficultyID = select(3, GetInstanceInfo());
-			if difficultyID == self.ENABLE_DIFFICULTY then
+			if difficultyID == self.ENABLE_DIFFICULTY and not self.isDebugging then
 				self:RegisterCombatNodes(instance);
 				self.currentInstance = instance;
 			end
