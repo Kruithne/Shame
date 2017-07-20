@@ -8,5 +8,9 @@ do
 		FORMAT_COMMAND_FULL = "  /shame %s|cfff58cba%s|r - |cffabd473%s|r",
 
 		LIST_FORMAT = "|cffabd473%s|r",
+
+		ENABLE_DIFFICULTY = 23, -- Mythic dungeons.
+
+		COMBAT_SPELL_HEAL = "SPELL_HEAL";
 	};
 end

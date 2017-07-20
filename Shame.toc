@@ -13,5 +13,8 @@ Commands.lua
 locale/enGB.lua
 locale/frFR.lua
 
+CombatGenerics.lua
+encounters/7D_HallsOfValor.lua
+
 ## X-GitHub-Repo: Kruithne/Shame
 ## X-Curse-Project-ID: Shame

@@ -2,16 +2,20 @@ do
 	-- [[ Optimization ]] --
 	local wipe = wipe;
 	local pairs = pairs;
+	local select = select;
 	local string_format = string.format;
 	local string_sub = string.sub;
 	local string_len = string.len;
 	local SendChatMessage = SendChatMessage;
 	local UnitIsPlayer = UnitIsPlayer;
+	local GetInstanceInfo = GetInstanceInfo;
 
 	-- [[ Initiate ]] --
 	local Shame = {
 		tracking = false, -- Flag for tracking state.
 		boardGroup = {},
+		instances = {},
+		combatListeners = {},
 		strings = {}, -- Localized strings.
 		modeChannel = "party", -- Real-time shaming channel.
 	};
@@ -94,8 +98,90 @@ do
 			["?"] = { hidden = true, func = self.ListCommands },
 		};
 
+		-- Begin monitoring for map changes.
+		self:SetEventHandler("ZONE_CHANGED_NEW_AREA", self.OnZoneChange);
+		self:SetEventHandler("PLAYER_ENTERING_WORLD", self.OnZoneChange);
+
 		-- Print loaded message.
 		self:Message(self.L_LOADED:format(GetAddOnMetadata(self.ADDON_NAME, "Version")));
+	end
+
+	--[[
+		Shame.OnCombatEvent
+		Invoked when a combat log event occurs.
+
+			self - Reference to the addon container.
+			timestamp - Integer timestamp for when the event occurred.
+			event - Identifier for the event.
+			... - Event arguments.
+	]]--
+	Shame.OnCombatEvent = function(self, timestamp, event, ...)
+		local listeners = self.combatListeners[event];
+		if listeners then
+			for i = 1, #listeners do
+				local tracker = listeners[i];
+				tracker.func(self, tracker, timestamp, event, ...);
+			end
+		end
+	end
+
+	--[[
+		Shame.OnZoneChange
+		Invoked when the player changes zone.
+
+			self - Reference to the addon container.
+	]]--
+	Shame.OnZoneChange = function(self)
+		local _, _, difficultyID, _, _, _, _, currentMapID = GetInstanceInfo();
+		local instance = self.instances[currentMapID];
+		local currentInstance = self.currentInstance;
+
+		-- Disable the active tracking module if there is one.
+		if currentInstance and currentInstance.zoneID ~= currentMapID then
+			self:ResetCombatListeners(self.currentInstance);
+		end
+
+		-- Enable a new tracker module if needed.
+		if instance then
+			local difficultyID = select(3, GetInstanceInfo());
+			if difficultyID == self.ENABLE_DIFFICULTY then
+				self:RegisterCombatNodes(instance);
+				self.currentInstance = instance;
+			end
+		end
+	end
+
+	--[[
+		Shame.RegisterCombatNodes
+		Register all combat nodes for a tracker.
+
+			self - Reference to the addon container.
+			data - Table containing tracker nodes.
+	]]--
+	Shame.RegisterCombatNodes = function(self, data)
+		local trackers = data.trackers;
+		for i = 1, #trackers do
+			local tracker = trackers[i];
+			local nodes = self.combatListeners[tracker.event];
+
+			-- No listener table, create one.
+			if not nodes then
+				nodes = {};
+				self.combatListeners[tracker.event] = nodes;
+			end
+
+			nodes[#nodes + 1] = tracker;
+		end
+	end
+
+	--[[
+		Shame.ResetCombatListeners
+		Remove all existing combat listeners.
+
+			self - Reference to the addon container.
+	]]--
+	Shame.ResetCombatListeners = function(self)
+		self.combatListeners = {};
 	end
 
 	--[[
@@ -105,10 +191,18 @@ do
 			self - Reference to the addon container.
 			actor - Name of the actor.
 			message - Message to display for this mistake.
+			... - String formatting arguments.
 	]]--
-	Shame.RegisterMistake = function(self, actor, message)
-		if not self.tracking then return; end
-		if not UnitIsPlayer(actor) then return; end
+	Shame.RegisterMistake = function(self, actor, message, ...)
+		if not self.tracking then
+			-- Prevent mistakes being registered outside a session.
+			return;
+		end
+
+		if not UnitIsPlayer(actor) then
+			-- Prevent non-players being flagged for mistakes.
+			return;
+		end
 
 		local newWorth = (self.boardGroup[actor] or 0) + 1;
 
@@ -120,8 +214,19 @@ do
 				target = self.modeChannel;
 			end
 
-			self:Message(message, target);
+			self:Message(message, target, ...);
 		end
+	end
+
+	--[[
+		Shame.RegisterInstance
+		Register an instance module for tracking.
+
+			self - Reference to the addon container.
+			instance - Table containing tracking data.
+	]]--
+	Shame.RegisterInstance = function(self, instance)
+		self.instances[instance.instanceID] = instance;
 	end
 
 	--[[
@@ -132,7 +237,10 @@ do
 	]]--
 	Shame.Enable = function(self)
 		self.tracking = true;
-		wipe(self.boardGroup);
+		wipe(self.boardGroup); -- Reset the score board.
+
+		-- Enable combat log monitoring.
+		self:SetEventHandler("COMBAT_LOG_EVENT_UNFILTERED", self.OnCombatEvent);
 	end
 
 	--[[
@@ -143,6 +251,9 @@ do
 	]]--
 	Shame.Disable = function(self)
 		self.tracking = false;
+
+		-- Disable combat log monitoring.
+		self:RemoveEventHandler("COMBAT_LOG_EVENT_UNFILTERED", self.OnCombatEvent);
 	end
 
 	--[[
