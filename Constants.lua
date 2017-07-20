@@ -1,3 +1,12 @@
+--[[
+	Shame (C) Kruithne <kruithne@gmail.com>
+	Licensed under GNU General Public Licence version 3.
+	
+	https://github.com/Kruithne/Shame
+
+	Constants.lua - Stores non-localized static values.
+]]--
+
 do
 	-- This initialized the string table with constant values that don't need localizing.
 	Shame.strings = {

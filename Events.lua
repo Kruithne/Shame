@@ -1,3 +1,12 @@
+--[[
+	Shame (C) Kruithne <kruithne@gmail.com>
+	Licensed under GNU General Public Licence version 3.
+	
+	https://github.com/Kruithne/Shame
+
+	Events.lua - Module for handling/routing game events.
+]]--
+
 do
 	-- [[ Local Optimization ]] --
 	local Shame = Shame;

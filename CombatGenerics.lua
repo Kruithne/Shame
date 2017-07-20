@@ -1,3 +1,12 @@
+--[[
+	Shame (C) Kruithne <kruithne@gmail.com>
+	Licensed under GNU General Public Licence version 3.
+	
+	https://github.com/Kruithne/Shame
+
+	CombatGenerics.lua - Contains generic handling functions for encounters.
+]]--
+
 do
 	local Shame = Shame;
 	local select = select;

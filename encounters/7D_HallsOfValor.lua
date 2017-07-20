@@ -1,3 +1,12 @@
+--[[
+	Shame (C) Kruithne <kruithne@gmail.com>
+	Licensed under GNU General Public Licence version 3.
+	
+	https://github.com/Kruithne/Shame
+
+	encounters/7D_HallsOfValor.lua - Encounter data for the (Legion) Halls of Valor dungeon.
+]]--
+
 do
 	local Shame = Shame;
 

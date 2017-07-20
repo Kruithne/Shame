@@ -1,3 +1,12 @@
+--[[
+	Shame (C) Kruithne <kruithne@gmail.com>
+	Licensed under GNU General Public Licence version 3.
+	
+	https://github.com/Kruithne/Shame
+
+	locale/enGB.lua - Defines English (default) localization.
+]]--
+
 do
 	-- We don't check for the locale here, since the enGB localization will be used
 	-- as the default fallback for missing strings in other locale.
