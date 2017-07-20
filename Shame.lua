@@ -20,7 +20,6 @@ do
 		boardGroup = {},
 		strings = {}, -- Localized strings.
 		modeChannel = "party", -- Real-time shaming channel.
-		mode = "self", -- Real-time shaming mode.
 	};
 
 	--[[
@@ -60,6 +59,9 @@ do
 		Invoked when the addon is loaded.
 	]]--
 	Shame.OnLoad = function()
+		-- Assign default values.
+		Shame.mode = L_MODE_SELF;
+
 		-- Create chat command.
 		_G["SLASH_SHAME1"] = "/" .. Shame.ADDON_NAME:lower();
 		SlashCmdList[Shame.ADDON_NAME:upper()] = Shame.OnCommand;
