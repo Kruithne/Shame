@@ -8,24 +8,26 @@ do
 	local string_len = string.len;
 
 	-- [[ Initiate ]] --
-	local _S = {
+	local Shame = {
 		tracking = false, -- Flag for tracking state.
 		boardGroup = {},
 		strings = {}, -- Localized strings.
 		modeChannel = "party", -- Real-time shaming channel.
-	}; Shame = _S;
+	};
 
 	-- Add feed-through to strings table for localization.
-	setmetatable(_S, { __index = function(t, k) return t.strings[k]; end });
+	setmetatable(Shame, { __index = function(t, k) return t.strings[k]; end });
+	_G["Shame"] = Shame; -- Expose addon container.
 
 	--[[
 		Shame.ApplyLocalization
 		Copies all given localization into the string table.
 
+			self - Reference to the addon container.
 			locale - Localization table.
 	]]--
-	_S.ApplyLocalization = function(locale)
-		local strings = _S.strings;
+	Shame.ApplyLocalization = function(self, locale)
+		local strings = self.strings;
 		for key, str in pairs(locale) do
 			strings[key] = str;
 		end
@@ -35,15 +37,16 @@ do
 		Shame.Message
 		Send a text message to a specified (or default) output.
 
+			self - Reference to the addon container.
 			text - Message to be sent.
 			channel - Output channel, leave blank for default.
 	]]--
-	_S.Message = function(text, channel, ...)
+	Shame.Message = function(self, text, channel, ...)
 		text = text:format(...);
 
 		if not channel then
 			-- Print message to users chat.
-			DEFAULT_CHAT_FRAME:AddMessage(_S.CHAT_PREFIX:format(text));
+			DEFAULT_CHAT_FRAME:AddMessage(self.CHAT_PREFIX:format(text));
 		else			
 			-- Print message to specified channel.
 			SendChatMessage(text, channel);
@@ -53,17 +56,19 @@ do
 	--[[
 		Shame.OnLoad
 		Invoked when the addon is loaded.
+
+			self - Reference to the addon container.
 	]]--
-	_S.OnLoad = function()
+	Shame.OnLoad = function(self)
 		-- Assign default values.
-		_S.currentMode = _S.L_MODE_SELF;
+		self.currentMode = self.L_MODE_SELF;
 
 		-- Create chat command.
-		_G["SLASH_SHAME1"] = "/" .. _S.ADDON_NAME:lower();
-		SlashCmdList[_S.ADDON_NAME:upper()] = _S.OnCommand;
+		_G["SLASH_SHAME1"] = "/" .. self.ADDON_NAME:lower();
+		SlashCmdList[self.ADDON_NAME:upper()] = self.OnCommand;
 
 		-- Create table containing valid channels.
-		_S.validChannels = {
+		self.validChannels = {
 			["guild"] = true,
 			["instance"] = true,
 			["officer"] = true,
@@ -72,66 +77,71 @@ do
 		};
 
 		-- Create table containing valid modes.
-		_S.validModes = {
-			[_S.L_MODE_ALL] = true,
-			[_S.L_MODE_SILENT] = true,
-			[_S.L_MODE_SELF] = true
+		self.validModes = {
+			[self.L_MODE_ALL] = true,
+			[self.L_MODE_SILENT] = true,
+			[self.L_MODE_SELF] = true
 		};
 
 		-- Create command table.
-		_S.commandList = {
-			[_S.L_CMD_START] = { desc = _S.L_CMD_DESC_START, func = _S.Command_Enable },
-			[_S.L_CMD_STOP] = { desc = _S.L_CMD_DESC_STOP, func = _S.Command_Disable },
-			[_S.L_CMD_MODE] = { desc = _S.L_CMD_DESC_MODE, usage = _S.L_CMD_MODE_HELP, func = _S.Command_SetMode },
-			[_S.L_CMD_PRINT] = { desc = _S.L_CMD_DESC_PRINT, usage = _S.L_CMD_PRINT_HELP, func = _S.Command_Print },
-			[_S.L_CMD_HELP] = { desc = _S.L_CMD_DESC_HELP, func = _S.ListCommands },
-			["?"] = { hidden = true, func = _S.ListCommands },
+		self.commandList = {
+			[self.L_CMD_START] = { desc = self.L_CMD_DESC_START, func = self.Command_Enable },
+			[self.L_CMD_STOP] = { desc = self.L_CMD_DESC_STOP, func = self.Command_Disable },
+			[self.L_CMD_MODE] = { desc = self.L_CMD_DESC_MODE, usage = self.L_CMD_MODE_HELP, func = self.Command_SetMode },
+			[self.L_CMD_PRINT] = { desc = self.L_CMD_DESC_PRINT, usage = self.L_CMD_PRINT_HELP, func = self.Command_Print },
+			[self.L_CMD_HELP] = { desc = self.L_CMD_DESC_HELP, func = self.ListCommands },
+			["?"] = { hidden = true, func = self.ListCommands },
 		};
 
 		-- Print loaded message.
-		_S.Message(_S.L_LOADED:format(GetAddOnMetadata(_S.ADDON_NAME, "Version")));
+		self:Message(self.L_LOADED:format(GetAddOnMetadata(self.ADDON_NAME, "Version")));
 	end
 
 	--[[
 		Shame.RegisterMistake
 		Register a player mistake.
 
+			self - Reference to the addon container.
 			actor - Name of the actor.
 			message - Message to display for this mistake.
 	]]--
-	_S.RegisterMistake = function(actor, message)
-		if not _S.tracking then return; end
+	Shame.RegisterMistake = function(self, actor, message)
+		if not self.tracking then return; end
 		if not UnitIsPlayer(actor) then return; end
 
-		local newWorth = (_S.boardGroup[actor] or 0) + 1;
+		local newWorth = (self.boardGroup[actor] or 0) + 1;
 
-		_S.boardGroup[actor] = newWorth;
+		self.boardGroup[actor] = newWorth;
 
-		if _S.currentMode == _S.L_MODE_ALL or _S.currentMode == _S.L_MODE_SELF then
+		if self.currentMode == self.L_MODE_ALL or self.currentMode == self.L_MODE_SELF then
 			local target = nil;
-			if _S.currentMode == _S.L_MODE_ALL then
-				target = _S.modeChannel;
+			if self.currentMode == self.L_MODE_ALL then
+				target = self.modeChannel;
 			end
 
-			_S.Message(message, target);
+			self:Message(message, target);
 		end
 	end
 
 	--[[
 		Shame.Enable
 		Enable the shaming.
+
+			self - Reference to the addon container.
 	]]--
-	_S.Enable = function()
-		_S.tracking = true;
-		wipe(_S.boardGroup);
+	Shame.Enable = function(self)
+		self.tracking = true;
+		wipe(self.boardGroup);
 	end
 
 	--[[
 		Shame.Disable
 		Disable the shaming.
+
+			self - Reference to the addon container.
 	]]--
-	_S.Disable = function()
-		_S.tracking = false;
+	Shame.Disable = function(self)
+		self.tracking = false;
 	end
 
 	--[[
@@ -141,7 +151,7 @@ do
 			input - Value to check for.
 			pool - Table to check inside.
 	]]--
-	_S.Validate = function(input, pool)
+	Shame.Validate = function(input, pool)
 		if not input then
 			return false;
 		end
@@ -164,12 +174,14 @@ do
 	--[[
 		Shame.PrintCurrentMode
 		Print the current output mode to chat.
+
+			self - Reference to the addon container.
 	]]--
-	_S.PrintCurrentMode = function()
-		if _S.currentMode == _S.L_MODE_ALL then
-			_S.Message(_S.L_MODE_SET, nil, _S.currentMode, _S.modeChannel);
+	Shame.PrintCurrentMode = function(self)
+		if self.currentMode == self.L_MODE_ALL then
+			self:Message(self.L_MODE_SET, nil, self.currentMode, self.modeChannel);
 		else
-			_S.Message(_S.L_MODE_SET_SIMPLE, nil, _S.currentMode);
+			self:Message(self.L_MODE_SET_SIMPLE, nil, self.currentMode);
 		end
 	end
 end

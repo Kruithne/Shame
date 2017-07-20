@@ -1,17 +1,20 @@
 do
 	-- [[ Local Optimization ]] --
-	local _S = Shame;
+	local Shame = Shame;
 	local type = type;
 	local pairs = pairs;
 
 	--[[
 		Shame.OnEvent_AddonLoaded
 		Invoked when the ADDON_LOADED event triggers.
+
+			self - Reference to the addon container.
+			addonName - Name of the addon which just loaded.
 	]]--
-	_S.OnAddonLoaded = function(addonName)
-		if addonName == _S.ADDON_NAME then
-			_S.RemoveEventHandler("ADDON_LOADED");
-			_S.OnLoad();
+	Shame.OnAddonLoaded = function(self, addonName)
+		if addonName == self.ADDON_NAME then
+			self:RemoveEventHandler("ADDON_LOADED");
+			self:OnLoad();
 		end
 	end
 
@@ -19,26 +22,27 @@ do
 		Shame.OnEvent
 		Invoked when a registered event occurred.
 	]]--
-	_S.OnEvent = function(self, event, ...)
-		local handler = _S.eventHandlers[event];
-		if handler then handler(...); end
+	Shame.OnEvent = function(self, event, ...)
+		local handler = Shame.eventHandlers[event];
+		if handler then handler(Shame, ...); end
 	end
 
 	--[[
 		Shame.SetEventHandler
 		Register an event handler.
 
+			self - Reference to the addon container.
 			event - Identifer for the event.
 			handler - Function to handle the callback.
 	]]--
-	_S.SetEventHandler = function(event, handler)
+	Shame.SetEventHandler = function(self, event, handler)
 		if type(event) == "table" then
 			for key, value in pairs(event) do
-				_S.SetEventHandler(key, value);
+				self:SetEventHandler(key, value);
 			end
 		else
-			_S.eventFrame:RegisterEvent(event);
-			_S.eventHandlers[event] = handler;
+			self.eventFrame:RegisterEvent(event);
+			self.eventHandlers[event] = handler;
 		end
 	end
 
@@ -46,15 +50,16 @@ do
 		Shame.RemoveEventHandler
 		Unregister an existing event handler.
 
+			self - Reference to the addon container.
 			event - Identifer for the event.
 	]]--
-	_S.RemoveEventHandler = function(event)
-		_S.eventFrame:UnregisterEvent(event);
-		_S.eventHandlers[event] = nil;
+	Shame.RemoveEventHandler = function(self, event)
+		self.eventFrame:UnregisterEvent(event);
+		self.eventHandlers[event] = nil;
 	end
 
-	_S.eventHandlers = {}; -- Stores event handlers.
-	_S.eventFrame = CreateFrame("FRAME");
-	_S.eventFrame:SetScript("OnEvent", _S.OnEvent);
-	_S.SetEventHandler("ADDON_LOADED", _S.OnAddonLoaded);
+	Shame.eventHandlers = {}; -- Stores event handlers.
+	Shame.eventFrame = CreateFrame("FRAME");
+	Shame.eventFrame:SetScript("OnEvent", Shame.OnEvent);
+	Shame:SetEventHandler("ADDON_LOADED", Shame.OnAddonLoaded);
 end
