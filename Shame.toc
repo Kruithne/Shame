@@ -1,10 +1,12 @@
-## Interface: 70000
+## Interface: 70200
 ## Title: Shame
 ## Notes: Track who sucks in your group/guild.
 ## Author: Kruithne
 ## Version: 2.0
 ## SavedVariables: ShameData
+
 Shame.lua
+locale/enGB.lua
 
 ## X-GitHub-Repo: Kruithne/Shame
 ## X-Curse-Project-ID: Shame
