@@ -1,7 +1,7 @@
 ## Interface: 70200
 ## Title: Shame
 ## Notes: Avoidable damage tracker for Mythic dungeons.
-## Author: Kruithne
+## Author: Kruithne (kruithne@gmail.com)
 ## Version: 2.0.0
 ## X-GitHub-Repo: Kruithne/Shame
 ## X-Curse-Project-ID: Shame
