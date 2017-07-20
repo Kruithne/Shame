@@ -26,6 +26,8 @@ do
 		L_AVAILABLE_COMMANDS = "|cff3fc7ebAvailable commands:|r",
 		L_INVALID_COMMAND = "Invalid command",
 
+		L_BOARD_FORMAT = "%s. %s took %s avoidable damage (%s)",
+
 		L_MODE_ALL = "all",
 		L_MODE_SILENT = "silent",
 		L_MODE_SELF = "self",

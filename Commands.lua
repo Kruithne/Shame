@@ -137,7 +137,7 @@ do
 			local done = false;
 			for index, actor in pairs(rosterIndex) do
 				local suffix = actor.mistakes > 1 and self.L_MISTAKE_MULTI or self.L_MISTAKE_SINGLE;
-				self:Message(self.BOARD_FORMAT, channel, index, actor.name, actor.damage or 0, suffix:format(actor.mistakes));
+				self:Message(self.L_BOARD_FORMAT, channel, index, actor.name, actor.damage or 0, suffix:format(actor.mistakes));
 				done = true;
 			end
 
