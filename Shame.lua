@@ -212,7 +212,7 @@ do
 
 			if commandNode then
 				if not commandNode.func(args) then
-					Shame.Message(Shame.L_COMMAND_SYNTAX .. Shame.FORMAT_COMMAND_SYNTAX, nil, command, commandNode.usage);
+					Shame.Message(Shame.L_COMMAND_SYNTAX, nil, command, commandNode.usage);
 				end
 			else
 				Shame.Message(Shame.L_UNKNOWN_COMMAND);

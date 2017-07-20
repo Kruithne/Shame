@@ -21,7 +21,7 @@ do
 		L_VALID_CHANNELS = "Valid channels: ",
 		L_INVALID_CHANNEL = "Invalid channel, use one of these: ",
 
-		L_COMMAND_SYNTAX = "Command syntax",
+		L_COMMAND_SYNTAX = "Command syntax: |cffabd473/shame %s|r|cfff58cba%s|r",
 		L_UNKNOWN_COMMAND = "Unknown command. Try '/shame help' for available commands.",
 		L_AVAILABLE_COMMANDS = "|cff3fc7ebAvailable commands:|r",
 		L_INVALID_COMMAND = "Invalid command",
