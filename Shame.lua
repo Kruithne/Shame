@@ -150,7 +150,7 @@ do
 
 		-- Disable the active tracking module if there is one.
 		if currentInstance and currentInstance.zoneID ~= currentMapID then
-			self:ResetCombatListeners(self.currentInstance);
+			self:ResetCombatListeners();
 		end
 
 		-- Enable a new tracker module if needed.
