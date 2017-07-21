@@ -43,7 +43,7 @@ do
 	Shame.CombatGeneric_SpellInterrupt = function(self, node, ...)
 		local _, _, _, _, descName, _, _, _, targetName, _, _ spellID, spellName = ...;
 
-		if spellID = node.spellID then
+		if spellID == node.spellID then
 			self:RegisterMistake(targetName, 0, self.L_CALLOUT_INTERRUPT, targetName, spellName);
 		end
 	end
