@@ -31,4 +31,20 @@ do
 			self:RegisterMistake(targetName, damageTaken, self.CALLOUT_DAMAGE, targetName, spellName, damageTaken);
 		end
 	end
+
+	--[[
+		Shame.CombatGeneric_SpellInterrupt
+		Triggered when a player is interrupted by a spell.
+
+			self - Reference to the addon container.
+			node - Tracker node.
+			... - Combat arguments.
+	]]--
+	Shame.CombatGeneric_SpellInterrupt = function(self, node, ...)
+		local _, _, _, _, descName, _, _, _, targetName, _, _ spellID, spellName = ...;
+
+		if spellID = node.spellID then
+			self:RegisterMistake(targetName, 0, self.CALLOUT_INTERRUPT, targetName, spellName);
+		end
+	end
 end
