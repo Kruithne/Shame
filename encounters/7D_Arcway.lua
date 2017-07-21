@@ -17,7 +17,6 @@ do
 			194006, -- Unstable Amalgamation - Ooze Puddle
 			211921, -- Priestess of Misery - Felstorm
 			211745, -- Wrathguard Felblade - Fel Strike
-			240279, -- Wrathguard Invader - Fel Strike
 			203593, -- Mana Wyrm - Nether Spike
 			211476, -- Mana Wyrm - Nether Spike
 			{ spellID = 211209, event = Shame.COMBAT_SPELL_PERIODIC }, -- Arcane Anomaly - Arcane Slicer

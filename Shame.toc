@@ -25,3 +25,5 @@ encounters/7D_EyeOfAzshara.lua
 encounters/7D_VaultOfTheWardens.lua
 encounters/7D_CourtOfStars.lua
 encounters/7D_Arcway.lua
+encounters/7D_CathedralOfEternalNight.lua
+encounters/7D_ReturnToKarazhan.lua
