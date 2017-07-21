@@ -9,6 +9,7 @@
 
 do
 	local Shame = Shame;
+	local UnitDebuff = UnitDebuff;
 
 	-- Sanctify Handler
 	local lastSanctifyHit = 0;
@@ -21,6 +22,17 @@ do
 				self:CombatGeneric_HandleMistake(node, targetName, damageTaken, self.L_CALLOUT_TRIGGER, targetName, spellName, damageTaken);
 				lastSanctifyHit = timestamp;
 			end
+		end
+	end
+
+	-- Scent of Blood Handler
+	local scentOfBloodName = GetSpellInfo(196838);
+	local CombatHandler_ScentOfBlood = function(self, node, ...)
+		local _, _, _, _, descName, _, _, _, targetName, _, _, damageTaken = ...;
+
+		-- Check if the player hit has the Scent of Blood debuff.
+		if UnitDebuff(targetName, scentOfBloodName) then
+			self:CombatGeneric_HandleMistake(node, targetName, damageTaken, self.L_CALLOUT_7D_HOV_FENRYR_SCENT);
 		end
 	end
 
@@ -49,6 +61,7 @@ do
 			{ spellID = 193092, event = Shame.COMBAT_AURA_APPLIED, excludeRole = Shame.ROLE_TANK, func = Shame.CombatGeneric_AuraApplied }, -- Bloodletting Sweep
 
 			-- Fenryr
+			{ event = Shame.COMBAT_SWING_DAMAGE, func = CombatHandler_ScentOfBlood }, -- Scent of Blood
 			{ spellID = 196543, event = Shame.COMBAT_SPELL_INTERRUPT, func = Shame.CombatGeneric_SpellInterrupt }, -- Unnerving Howl
 
 			-- God-King Skovald

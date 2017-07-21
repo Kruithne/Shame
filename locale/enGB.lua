@@ -40,7 +40,9 @@ do
 		L_CALLOUT_STUNNED = "%s failed to avoid %s! (Stunned)",
 		L_CALLOUT_GENERIC = "%s failed %s!",
 		L_CALLOUT_TRIGGER = "%s triggered %s! (%s)",
+
 		L_CALLOUT_7D_HOV_ODYN_RUNE = "%s picked the wrong rune! (%s)",
+		L_CALLOUT_7D_HOV_FENRYR_SCENT = "%s failed to run away from %s! (%s)",
 
 		L_BOARD_FORMAT = "%s. %s took %s avoidable damage (%s)",
 
