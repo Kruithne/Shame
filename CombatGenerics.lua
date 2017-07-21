@@ -40,7 +40,7 @@ do
 		end
 
 		if node.excludeDebuff then
-			local debuff = UnitDebuff(actor, node.exludeDebuff);
+			local debuff = UnitDebuff(actor, node.excludeDebuff);
 			if debuff then
 				-- Players with this debuff are excluded from this fuckery.
 				return;
