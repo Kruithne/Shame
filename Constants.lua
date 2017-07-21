@@ -20,6 +20,8 @@ do
 
 		ENABLE_DIFFICULTY = 23, -- Mythic dungeons.
 
+		CALLOUT_DAMAGE = "%s failed to avoid %s! (%s)",
+
 		COMBAT_SPELL_DAMAGE = "SPELL_DAMAGE",
 	};
 end

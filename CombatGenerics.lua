@@ -29,7 +29,7 @@ do
 		local spellID = select(7, GetSpellInfo(spellName));
 
 		if spellID == node.spellID then
-			self:RegisterMistake(playerName, damageTaken, "%s failed to avoid %s! (%s)", playerName, spellName, damageTaken);
+			self:RegisterMistake(playerName, damageTaken, self.CALLOUT_DAMAGE, playerName, spellName, damageTaken);
 		end
 	end
 end
