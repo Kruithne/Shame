@@ -31,9 +31,9 @@ do
 			... - Arguments for the message string.
 	]]--
 	Shame.CombatGeneric_HandleMistake = function(self, node, actor, damage, message, ...)
-		if node.roleExcluded then
+		if node.excludeRole then
 			local role = UnitGroupRolesAssigned(actor);
-			if role == node.roleExcluded then
+			if role == node.excludeRole then
 				-- This role is excluded from this fuckery.
 				return;
 			end

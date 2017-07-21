@@ -35,10 +35,10 @@ do
 			199050, -- Valarjar Shieldmaiden - Mortal Hew
 			{ spellID = 199818, event = Shame.COMBAT_SPELL_PERIODIC }, -- Stormforged Sentinel - Crackle
 			{ spellID = 198903, event = Shame.COMBAT_SPELL_PERIODIC }, -- Storm Drake - Crackling Storm
-			{ spellID = 198888, roleExcluded = Shame.ROLE_TANK }, -- Storm Drake - Lightning Breath
+			{ spellID = 198888, excludeRole = Shame.ROLE_TANK }, -- Storm Drake - Lightning Breath
 
 			-- Hyrja
-			{ spellID = 192018, roleExcluded = Shame.ROLE_TANK },
+			{ spellID = 192018, excludeRole = Shame.ROLE_TANK },
 			{ spellID = 192206, func = CombatHandler_Sanctify }, -- Sanctify
 			{ spellID = 200682, excludeDebuff = (GetSpellInfo(200901)) }, -- Eye of the Storm
 
@@ -46,7 +46,7 @@ do
 			188395, -- Ball Lightning
 			{ spellID = 193234, event = Shame.COMBAT_SPELL_PERIODIC }, -- Dancing Blade
 			{ spellID = 193260, event = Shame.COMBAT_SPELL_PERIODIC }, -- Static Field
-			{ spellID = 193092, event = Shame.COMBAT_AURA_APPLIED, roleExcluded = Shame.ROLE_TANK }, -- Bloodletting Sweep
+			{ spellID = 193092, event = Shame.COMBAT_AURA_APPLIED, excludeRole = Shame.ROLE_TANK }, -- Bloodletting Sweep
 
 			-- Fenryr
 			{ spellID = 196543, event = Shame.COMBAT_SPELL_INTERRUPT, func = Shame.CombatGeneric_SpellInterrupt }, -- Unnerving Howl
