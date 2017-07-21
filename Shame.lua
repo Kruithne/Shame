@@ -130,7 +130,7 @@ do
 		if listeners then
 			for i = 1, #listeners do
 				local tracker = listeners[i];
-				local func = tracker.func or Shame.CombatGeneric_SpellDamage;
+				local func = tracker.func or self.CombatGeneric_SpellDamage;
 
 				func(self, tracker, timestamp, event, ...);
 			end
