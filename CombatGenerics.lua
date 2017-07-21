@@ -25,11 +25,11 @@ do
 			... - Combat arguments.
 	]]--
 	Shame.CombatGeneric_SpellDamage = function(self, node, ...)
-		local _, _, _, _, playerName, _, _, _, _, _, _, _, spellName, _, damageTaken = ...;
+		local _, _, _, _, descName, _, _, _, targetName, _, _, _, spellName, _, damageTaken = ...;
 		local spellID = select(7, GetSpellInfo(spellName));
 
 		if spellID == node.spellID then
-			self:RegisterMistake(playerName, damageTaken, self.CALLOUT_DAMAGE, playerName, spellName, damageTaken);
+			self:RegisterMistake(targetName, damageTaken, self.CALLOUT_DAMAGE, targetName, spellName, damageTaken);
 		end
 	end
 end
