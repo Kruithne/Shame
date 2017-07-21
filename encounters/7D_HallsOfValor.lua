@@ -26,6 +26,7 @@ do
 			188395, -- Ball Lightning
 			{ spellID = 193234, event = Shame.COMBAT_SPELL_PERIODIC }, -- Dancing Blade
 			{ spellID = 193260, event = Shame.COMBAT_SPELL_PERIODIC }, -- Static Field
+			{ spellID = 193092, event = Shame.COMBAT_AURA_APPLIED, roleExcluded = "TANK" }, -- Bloodletting Sweep
 
 			-- Fenryr
 			{ spellID = 196543, event = Shame.COMBAT_SPELL_INTERRUPT, func = Shame.CombatGeneric_SpellInterrupt }, -- Unnerving Howl
