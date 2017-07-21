@@ -28,7 +28,7 @@ do
 			229988, -- Burning Tile
 			{ spellName = (GetSpellInfo(229558)) }, -- Bishop Move
 			{ spellID = 229682, event = Shame.COMBAT_SPELL_PERIODIC }, -- Gleeful Immolation
-			{ spellID = 241774, event = Shame.COMBAT_AURA_APPLIED, func = Shamn.CombatGeneric_AuraApplied }, -- Shield Smash
+			{ spellID = 241774, event = Shame.COMBAT_AURA_APPLIED, func = Shame.CombatGeneric_AuraApplied }, -- Shield Smash
 			{ spellID = 227977, event = Shame.COMBAT_AURA_APPLIED, func = Shame.CombatGeneric_AuraApplied }, -- Flashlight
 
 			-- The Curator
