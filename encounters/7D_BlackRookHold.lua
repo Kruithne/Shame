@@ -38,7 +38,7 @@ do
 			198820, -- Dark Blast
 			199567, -- Dark Obliteration
 			198781, -- Whirling Blade
-			{ spellID = 199143, event = Shame.COMBAT_AURA_APPLIED, func = Shame.CombatGeneric_AuraApplied, message = Shame.L_CALLOUT_SLEEP }, -- Cloud of Hypnosis
+			{ spellID = 199143, event = Shame.COMBAT_AURA_APPLIED, func = Shame.CombatGeneric_AuraApplied, failType = Shame.L_CC_ASLEEP }, -- Cloud of Hypnosis
 		}
 	});
 end

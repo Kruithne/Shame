@@ -61,7 +61,7 @@ do
 	Shame.CombatGeneric_SpellDamage = function(self, node, ...)
 		local _, _, _, _, descName, _, _, _, targetName, _, _, spellID, spellName, _, damageTaken = ...;
 
-		if spellID == node.spellID then
+		if spellID == node.spellID or node.spellName and node.spellName == spellName then
 			self:CombatGeneric_HandleMistake(node, targetName, damageTaken, self.L_CALLOUT_DAMAGE, targetName, spellName, BreakUpLargeNumbers(damageTaken));
 		end
 	end
@@ -77,8 +77,8 @@ do
 	Shame.CombatGeneric_SpellInterrupt = function(self, node, ...)
 		local _, _, _, _, descName, _, _, _, targetName, _, _, spellID, spellName = ...;
 
-		if spellID == node.spellID then
-			self:CombatGeneric_HandleMistake(node, targetName, 0, self.L_CALLOUT_INTERRUPT, targetName, spellName);
+		if spellID == node.spellID or node.spellName and node.spellName == spellName then
+			self:CombatGeneric_HandleMistake(node, targetName, 0, self.L_CALLOUT_DAMAGE, targetName, spellName, self.L_CC_INTERRUPT);
 		end
 	end
 
@@ -98,8 +98,8 @@ do
 			return;
 		end
 
-		if spellID == node.spellID then
-			self:CombatGeneric_HandleMistake(node, targetName, 0, self.L_CALLOUT_GENERIC, targetName, spellName);
+		if spellID == node.spellID or node.spellName and node.spellName == spellName then
+			self:CombatGeneric_HandleMistake(node, targetName, 0, self.L_CALLOUT_DAMAGE, targetName, spellName, node.failType or self.L_CC_UNKNOWN);
 		end
 	end
 end

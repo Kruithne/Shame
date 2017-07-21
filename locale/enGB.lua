@@ -36,11 +36,14 @@ do
 		L_INVALID_COMMAND = "Invalid command",
 
 		L_CALLOUT_DAMAGE = "%s failed to avoid %s! (%s)",
-		L_CALLOUT_INTERRUPT = "%s failed %s! (Interrupted)",
-		L_CALLOUT_STUNNED = "%s failed to avoid %s! (Stunned)",
-		L_CALLOUT_SLEEP = "%s failed to avoid %s! (Asleep)",
 		L_CALLOUT_GENERIC = "%s failed %s!",
 		L_CALLOUT_TRIGGER = "%s triggered %s! (%s)",
+
+		L_CC_UNKNOWN = "Debuff",
+		L_CC_INTERRUPTED = "Interrupted",
+		L_CC_STUNNED = "Stunned",
+		L_CC_ASLEEP = "Asleep",
+		L_CC_FEARED = "Feared",
 
 		L_CALLOUT_7D_HOV_ODYN_RUNE = "%s picked the wrong rune! (%s)",
 		L_CALLOUT_7D_HOV_FENRYR_SCENT = "%s failed to run away from %s! (%s)",
