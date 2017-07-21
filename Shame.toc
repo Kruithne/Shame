@@ -18,3 +18,4 @@ CombatGenerics.lua
 encounters/7D_HallsOfValor.lua
 encounters/7D_VioletHold.lua
 encounters/7D_BlackRookHold.lua
+encounters/7D_DarkheartThicket.lua
