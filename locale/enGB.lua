@@ -38,6 +38,7 @@ do
 		L_CALLOUT_DAMAGE = "%s failed to avoid %s! (%s)",
 		L_CALLOUT_INTERRUPT = "%s failed %s! (Interrupted)",
 		L_CALLOUT_STUNNED = "%s failed to avoid %s! (Stunned)",
+		L_CALLOUT_SLEEP = "%s failed to avoid %s! (Asleep)",
 		L_CALLOUT_GENERIC = "%s failed %s!",
 		L_CALLOUT_TRIGGER = "%s triggered %s! (%s)",
 
