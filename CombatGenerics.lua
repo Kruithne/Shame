@@ -75,7 +75,7 @@ do
 			... - Combat arguments.
 	]]--
 	Shame.CombatGeneric_SpellInterrupt = function(self, node, ...)
-		local _, _, _, _, descName, _, _, _, targetName, _, _ spellID, spellName = ...;
+		local _, _, _, _, descName, _, _, _, targetName, _, _, spellID, spellName = ...;
 
 		if spellID == node.spellID then
 			self:CombatGeneric_HandleMistake(node, targetName, 0, self.L_CALLOUT_INTERRUPT, targetName, spellName);
@@ -91,7 +91,7 @@ do
 			... - Combat arguments.
 	]]--
 	Shame.CombatGeneric_AuraApplied = function(self, node, ...)
-		local _, _, _, _, descName, _, _, _, targetName, _, _ spellID, spellName, auraType = ...;
+		local _, _, _, _, descName, _, _, _, targetName, _, _, spellID, spellName, auraType = ...;
 
 		if node.auraType and node.auraType ~= auraType then
 			-- Aura type does not match specified.
