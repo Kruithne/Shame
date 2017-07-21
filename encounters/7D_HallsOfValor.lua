@@ -28,7 +28,6 @@ do
 		instanceID = 1477,
 		trackers = {
 			-- Trash
-			199337, -- Valarjar Trapper - Bear Trap
 			191508, -- Valarjar Aspirant - Blast of Light
 			199210, -- Valarjar Marksman - Penetrating Shot
 			210875, -- Stormforged Sentinel - Charged Pulse
@@ -36,6 +35,7 @@ do
 			{ spellID = 199818, event = Shame.COMBAT_SPELL_PERIODIC }, -- Stormforged Sentinel - Crackle
 			{ spellID = 198903, event = Shame.COMBAT_SPELL_PERIODIC }, -- Storm Drake - Crackling Storm
 			{ spellID = 198888, excludeRole = Shame.ROLE_TANK }, -- Storm Drake - Lightning Breath
+			{ spellID = 199337, event = Shame.COMBAT_AURA_APPLIED, func = Shame.CombatGeneric_AuraApplied }, -- Valarjar Trapper - Bear Trap
 
 			-- Hyrja
 			{ spellID = 192018, excludeRole = Shame.ROLE_TANK },
