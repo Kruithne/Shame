@@ -20,6 +20,6 @@ do
 
 		ENABLE_DIFFICULTY = 23, -- Mythic dungeons.
 
-		COMBAT_SPELL_HEAL = "SPELL_HEAL";
+		COMBAT_SPELL_DAMAGE = "SPELL_DAMAGE",
 	};
 end

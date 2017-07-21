@@ -13,11 +13,10 @@ do
 	Shame:RegisterInstance({
 		instanceID = 1477,
 		trackers = {
-			{
-				-- Used for debugging.
-				event = Shame.COMBAT_SPELL_HEAL,
-				func = Shame.CombatGeneric_Heal,
-				spellID = 5185, -- Healing Touch
+			{ -- Valarjar Trapper - Bear Trap
+				event = Shame.COMBAT_SPELL_DAMAGE,
+				func = Shame.CombatGeneric_SpellDamage,
+				spellID = 199337, -- [Bear Trap]
 			}
 		}
 	});
