@@ -11,6 +11,7 @@ do
 	local Shame = Shame;
 	local select = select;
 	local GetSpellInfo = GetSpellInfo;
+	local UnitGroupRolesAssigned = UnitGroupRolesAssigned;
 
 	local mselect = function(indexes, ...)
 		local data = {...};
@@ -21,6 +22,13 @@ do
 		Used by generic combat triggers to trigger mistakes.
 	]]--
 	Shame.CombatGeneric_HandleMistake = function(self, node, actor, damage, message, ...)
+		if node.roleExcluded then
+			local role = UnitGroupRolesAssigned(actor);
+			if role == node.roleExcluded then
+				-- This role is excluded from this fuckery.
+				return;
+			end
+		end
 		self:RegisterMistake(actor, damage, node.message or message, ...);
 	end
 
