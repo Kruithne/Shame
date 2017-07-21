@@ -19,7 +19,7 @@ do
 			199210, -- Valarjar Marksman - Penetrating Shot
 			210875, -- Stormforged Sentinel - Charged Pulse
 			199818, -- Stormforged Sentinel - Crackle
-			198903, -- Storm Drake - Crackling Storm
+			{ spellID = 198903, event = Shame.COMBAT_SPELL_PERIODIC }, -- Storm Drake - Crackling Storm
 			{ spellID = 198888, roleExcluded = "TANK" }, -- Storm Drake - Lightning Breath
 
 			-- Hyrmdall
