@@ -40,7 +40,7 @@ do
 			-- Hyrja
 			{ spellID = 192018, roleExcluded = Shame.ROLE_TANK },
 			{ spellID = 192206, func = CombatHandler_Sanctify }, -- Sanctify
-			{ spellID = 200682, excludeAura = (GetSpellInfo(200901)) }, -- Eye of the Storm
+			{ spellID = 200682, excludeDebuff = (GetSpellInfo(200901)) }, -- Eye of the Storm
 
 			-- Hyrmdall
 			188395, -- Ball Lightning

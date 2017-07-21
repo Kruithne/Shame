@@ -39,10 +39,10 @@ do
 			end
 		end
 
-		if node.excludeAura then
-			local aura = UnitAura(actor, node.excludeAura);
-			if aura then
-				-- Players with this aura are excluded from this fuckery.
+		if node.excludeDebuff then
+			local debuff = UnitDebuff(actor, node.exludeDebuff);
+			if debuff then
+				-- Players with this debuff are excluded from this fuckery.
 				return;
 			end
 		end
