@@ -17,6 +17,14 @@ do
 	end
 
 	--[[
+		Shame.CombatGeneric_HandleMistake
+		Used by generic combat triggers to trigger mistakes.
+	]]--
+	Shame.CombatGeneric_HandleMistake = function(self, node, actor, damage, message, ...)
+		self:RegisterMistake(actor, damage, node.message or message, ...);
+	end
+
+	--[[
 		Shame.CombatGeneric_Damage
 		Triggered when a player is damaged by a spell.
 
@@ -28,7 +36,7 @@ do
 		local _, _, _, _, descName, _, _, _, targetName, _, _, spellID, spellName, _, damageTaken = ...;
 
 		if spellID == node.spellID then
-			self:RegisterMistake(targetName, damageTaken, self.L_CALLOUT_DAMAGE, targetName, spellName, damageTaken);
+			self:CombatGeneric_HandleMistake(targetName, damageTaken, self.L_CALLOUT_DAMAGE, targetName, spellName, damageTaken);
 		end
 	end
 
@@ -44,7 +52,7 @@ do
 		local _, _, _, _, descName, _, _, _, targetName, _, _ spellID, spellName = ...;
 
 		if spellID == node.spellID then
-			self:RegisterMistake(targetName, 0, self.L_CALLOUT_INTERRUPT, targetName, spellName);
+			self:CombatGeneric_HandleMistake(targetName, 0, self.L_CALLOUT_INTERRUPT, targetName, spellName);
 		end
 	end
 
@@ -65,7 +73,7 @@ do
 		end
 
 		if spellID == node.spellID then
-			self:RegisterMistake(targetName, 0, self.L_CALLOUT_GENERIC, targetName, spellName);
+			self:CombatGeneric_HandleMistake(targetName, 0, self.L_CALLOUT_GENERIC, targetName, spellName);
 		end
 	end
 end
