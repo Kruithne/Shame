@@ -35,8 +35,8 @@ do
 			-- Odyn
 			227781, -- Glowing Fragment #1
 			198088, -- Glowing Fragment #2
-			198412, -- Feedback
 			198263, -- Radiant Tempest
+			{ spellID = 198412, message = Shame.L_CALLOUT_7D_HOV_ODYN_RUNE }, -- Feedback
 			{ spellID = 200988, event = Shame.COMBAT_SPELL_PERIODIC }, -- Spear of Light
 	});
 end

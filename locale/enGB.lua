@@ -38,6 +38,7 @@ do
 		L_CALLOUT_DAMAGE = "%s failed to avoid %s! (%s)",
 		L_CALLOUT_INTERRUPT = "%s failed %s! (Interrupted)",
 		L_CALLOUT_GENERIC = "%s failed %s!",
+		L_CALLOUT_7D_HOV_ODYN_RUNE = "%s picked the wrong rune! (%s)",
 
 		L_BOARD_FORMAT = "%s. %s took %s avoidable damage (%s)",
 
