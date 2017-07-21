@@ -38,6 +38,7 @@ do
 			{ spellID = 198888, roleExcluded = "TANK" }, -- Storm Drake - Lightning Breath
 
 			-- Hyrja
+			{ spellID = 192018, roleExcluded = "TANK" }
 			{ spellID = 192206, func = CombatHandler_Sanctify }, -- Sanctify
 			{ spellID = 200682, excludeAura = (GetSpellInfo(200901)) }, -- Eye of the Storm
 
