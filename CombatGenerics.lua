@@ -20,6 +20,13 @@ do
 	--[[
 		Shame.CombatGeneric_HandleMistake
 		Used by generic combat triggers to trigger mistakes.
+
+			self - Reference to the addon container.
+			node - Tracker node.
+			actor - Name of the actor who made the mistake.
+			damage - Damage value of the mistake.
+			message - Unformatted message string.
+			... - Arguments for the message string.
 	]]--
 	Shame.CombatGeneric_HandleMistake = function(self, node, actor, damage, message, ...)
 		if node.roleExcluded then
