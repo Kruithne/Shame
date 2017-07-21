@@ -20,10 +20,6 @@ do
 
 		ENABLE_DIFFICULTY = 23, -- Mythic dungeons.
 
-		CALLOUT_DAMAGE = "%s failed to avoid %s! (%s)",
-		CALLOUT_INTERRUPT = "%s failed %s! (Interrupted)",
-		CALLOUT_GENERIC = "%s failed %s!",
-
 		COMBAT_SPELL_DAMAGE = "SPELL_DAMAGE",
 		COMBAT_SPELL_PERIODIC = "SPELL_PERIODIC_DAMAGE",
 	};

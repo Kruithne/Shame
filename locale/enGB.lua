@@ -35,6 +35,10 @@ do
 		L_AVAILABLE_COMMANDS = "|cff3fc7ebAvailable commands:|r",
 		L_INVALID_COMMAND = "Invalid command",
 
+		L_CALLOUT_DAMAGE = "%s failed to avoid %s! (%s)",
+		L_CALLOUT_INTERRUPT = "%s failed %s! (Interrupted)",
+		L_CALLOUT_GENERIC = "%s failed %s!",
+
 		L_BOARD_FORMAT = "%s. %s took %s avoidable damage (%s)",
 
 		L_MODE_ALL = "all",
