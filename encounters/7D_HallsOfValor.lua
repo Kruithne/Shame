@@ -58,7 +58,7 @@ do
 			188395, -- Ball Lightning
 			{ spellID = 193234, event = Shame.COMBAT_SPELL_PERIODIC }, -- Dancing Blade
 			{ spellID = 193260, event = Shame.COMBAT_SPELL_PERIODIC }, -- Static Field
-			{ spellID = 193092, event = Shame.COMBAT_AURA_APPLIED, excludeRole = Shame.ROLE_TANK, func = Shame.CombatGeneric_AuraApplied }, -- Bloodletting Sweep
+			{ spellID = 193092, excludeRole = Shame.ROLE_TANK }, -- Bloodletting Sweep
 
 			-- Fenryr
 			{ event = Shame.COMBAT_SWING_DAMAGE, func = CombatHandler_ScentOfBlood }, -- Scent of Blood
