@@ -10,6 +10,7 @@
 do
 	local Shame = Shame;
 	local select = select;
+	local UnitAura = UnitAura;
 	local GetSpellInfo = GetSpellInfo;
 	local UnitGroupRolesAssigned = UnitGroupRolesAssigned;
 
@@ -36,6 +37,15 @@ do
 				return;
 			end
 		end
+
+		if node.excludeAura then
+			local aura = UnitAura(actor, node.excludeAura);
+			if aura then
+				-- Players with this aura are excluded from this fuckery.
+				return;
+			end
+		end
+
 		self:RegisterMistake(actor, damage, node.message or message, ...);
 	end
 
