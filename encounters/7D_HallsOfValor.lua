@@ -19,6 +19,7 @@ do
 			199210, -- Valarjar Marksman - Penetrating Shot
 			210875, -- Stormforged Sentinel - Charged Pulse
 			199818, -- Stormforged Sentinel - Crackle
+			{ spellID = 198888, roleExcluded = "TANK" }, -- Storm Drake - Lightning Breath
 
 			-- Hyrmdall
 			188395, -- Ball Lightning
