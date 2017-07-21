@@ -49,6 +49,8 @@ do
 		L_CALLOUT_7D_HOV_ODYN_RUNE = "%s picked the wrong rune! (%s)",
 		L_CALLOUT_7D_HOV_FENRYR_SCENT = "%s failed to run away from %s! (%s)",
 
+		L_CALLOUT_7D_VOTW_ASH_PLAT = "%s fell off the platform! (%s)",
+
 		L_BOARD_FORMAT = "%s. %s took %s avoidable damage (%s)",
 
 		L_MODE_ALL = "all",
