@@ -13,6 +13,7 @@ do
 	local UnitAura = UnitAura;
 	local GetSpellInfo = GetSpellInfo;
 	local UnitGroupRolesAssigned = UnitGroupRolesAssigned;
+	local BreakUpLargeNumbers = BreakUpLargeNumbers;
 
 	local mselect = function(indexes, ...)
 		local data = {...};
@@ -61,7 +62,7 @@ do
 		local _, _, _, _, descName, _, _, _, targetName, _, _, spellID, spellName, _, damageTaken = ...;
 
 		if spellID == node.spellID then
-			self:CombatGeneric_HandleMistake(node, targetName, damageTaken, self.L_CALLOUT_DAMAGE, targetName, spellName, damageTaken);
+			self:CombatGeneric_HandleMistake(node, targetName, damageTaken, self.L_CALLOUT_DAMAGE, targetName, spellName, BreakUpLargeNumbers(damageTaken));
 		end
 	end
 
