@@ -31,6 +31,7 @@ do
 			-- God-King Skovald
 			193660, -- Felblaze Rush
 			{ spellID = 193702, event = Shame.COMBAT_SPELL_PERIODIC }, -- Infernal Flames
+			{ spellID = 193686, event = Shame.COMBAT_AURA_APPLIED, func = Shame.CombatGeneric_AuraApplied }, -- Ragged Slash
 
 			-- Odyn
 			227781, -- Glowing Fragment #1
