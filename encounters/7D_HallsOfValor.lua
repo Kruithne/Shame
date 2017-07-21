@@ -13,31 +13,13 @@ do
 	Shame:RegisterInstance({
 		instanceID = 1477,
 		trackers = {
-			{ -- Valarjar Trapper - Bear Trap
-				event = Shame.COMBAT_SPELL_DAMAGE,
-				func = Shame.CombatGeneric_SpellDamage,
-				spellID = 199337,
-			},
-			{ -- Valarjar Aspirant - Blast of Light
-				event = Shame.COMBAT_SPELL_DAMAGE,
-				func = Shame.CombatGeneric_SpellDamage,
-				spellID = 191508,
-			},
-			{ -- Valarjar Marksman - Penetrating Shot
-				event = Shame.COMBAT_SPELL_DAMAGE,
-				func = Shame.CombatGeneric_SpellDamage,
-				spellID = 199210,
-			},
-			{ -- Hyrmdall - Dancing Blade
-				event = Shame.COMBAT_SPELL_PERIODIC,
-				func = Shame.CombatGeneric_SpellDamage,
-				spellID = 193234
-			},
-			{ -- Hyrmdall - Ball Lightning
-				event = Shame.COMBAT_SPELL_DAMAGE,
-				func = Shame.CombatGeneric_SpellDamage,
-				spellID = 188395,
-			}
-		}
+			-- Trash
+			spellID = 199337, -- Valarjar Trapper - Bear Trap
+			spellID = 191508, -- Valarjar Aspirant - Blast of Light
+			spellID = 199210, -- Valarjar Marksman - Penetrating Shot
+
+			-- Hyrmdall
+			spellID = 188395, -- Ball Lightning
+			{ spellID = 193234, event = Shame.COMBAT_SPELL_PERIODIC }, -- Dancing Blade
 	});
 end

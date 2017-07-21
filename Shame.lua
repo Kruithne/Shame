@@ -10,6 +10,7 @@
 do
 	-- [[ Optimization ]] --
 	local wipe = wipe;
+	local type = type;
 	local pairs = pairs;
 	local select = select;
 	local string_format = string.format;
@@ -129,7 +130,9 @@ do
 		if listeners then
 			for i = 1, #listeners do
 				local tracker = listeners[i];
-				tracker.func(self, tracker, timestamp, event, ...);
+				local func = tracker.func or Shame.CombatGeneric_SpellDamage;
+
+				func(self, tracker, timestamp, event, ...);
 			end
 		end
 	end
@@ -168,12 +171,19 @@ do
 		local trackers = data.trackers;
 		for i = 1, #trackers do
 			local tracker = trackers[i];
-			local nodes = self.combatListeners[tracker.event];
+
+			if type(tracker) ~= "table" then
+				tracker = { spellID = tracker };
+				trackers[i] = tracker;
+			end
+
+			local event = tracker.event or self.COMBAT_SPELL_DAMAGE;
+			local nodes = self.combatListeners[event];
 
 			-- No listener table, create one.
 			if not nodes then
 				nodes = {};
-				self.combatListeners[tracker.event] = nodes;
+				self.combatListeners[event] = nodes;
 			end
 
 			nodes[#nodes + 1] = tracker;
