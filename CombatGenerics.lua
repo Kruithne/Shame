@@ -47,4 +47,25 @@ do
 			self:RegisterMistake(targetName, 0, self.CALLOUT_INTERRUPT, targetName, spellName);
 		end
 	end
+
+	--[[
+		Shame.CombatGeneric_AuraApplied
+		Triggered when a player gains a specific aura.
+
+			self - Reference to the addon container.
+			node - Tracker node.
+			... - Combat arguments.
+	]]--
+	Shame.CombatGeneric_AuraApplied = function(self, node, ...)
+		local _, _, _, _, descName, _, _, _, targetName, _, _ spellID, spellName, auraType = ...;
+
+		if node.auraType and node.auraType ~= auraType then
+			-- Aura type does not match specified.
+			return;
+		end
+
+		if spellID == node.spellID then
+			self:RegisterMistake(targetName, 0, self.CALLOUT_GENERIC, targetName, spellName);
+		end
+	end
 end
