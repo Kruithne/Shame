@@ -53,6 +53,7 @@ do
 
 			-- God-King Skovald
 			193660, -- Felblaze Rush
+			193827, -- Ragnarok
 			{ spellID = 193702, event = Shame.COMBAT_SPELL_PERIODIC }, -- Infernal Flames
 			{ spellID = 193686, event = Shame.COMBAT_AURA_APPLIED, func = Shame.CombatGeneric_AuraApplied }, -- Ragged Slash
 
