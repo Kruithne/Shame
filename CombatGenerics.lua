@@ -26,7 +26,7 @@ do
 	]]--
 	Shame.CombatGeneric_SpellDamage = function(self, node, ...)
 		local _, _, _, _, descName, _, _, _, targetName, _, _, spellID, spellName, _, damageTaken = ...;
-		
+
 		if spellID == node.spellID then
 			self:RegisterMistake(targetName, damageTaken, self.CALLOUT_DAMAGE, targetName, spellName, damageTaken);
 		end

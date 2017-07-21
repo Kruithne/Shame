@@ -23,5 +23,6 @@ do
 		CALLOUT_DAMAGE = "%s failed to avoid %s! (%s)",
 
 		COMBAT_SPELL_DAMAGE = "SPELL_DAMAGE",
+		COMBAT_SPELL_PERIODIC = "SPELL_PERIODIC_DAMAGE",
 	};
 end
