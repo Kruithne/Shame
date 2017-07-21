@@ -10,6 +10,20 @@
 do
 	local Shame = Shame;
 
+	-- Sanctify Handler
+	local lastSanctifyHit = 0;
+	local CombatHandler_Sanctify = function(self, node, ...)
+		local timestamp, _, _, _, descName, _, _, _, targetName, _, _, spellID, spellName, _, damageTaken = ...;
+
+		if spellID == node.spellID then
+			local diff = timestamp - lastSanctifyHit;
+			if diff > 0.3 then
+				self:CombatGeneric_HandleMistake(node, targetName, damageTaken, self.L_CALLOUT_TRIGGER, targetName, spellName, damageTaken);
+				lastSanctifyHit = timestamp;
+			end
+		end
+	end
+
 	Shame:RegisterInstance({
 		instanceID = 1477,
 		trackers = {
@@ -22,6 +36,9 @@ do
 			{ spellID = 199818, event = Shame.COMBAT_SPELL_PERIODIC }, -- Stormforged Sentinel - Crackle
 			{ spellID = 198903, event = Shame.COMBAT_SPELL_PERIODIC }, -- Storm Drake - Crackling Storm
 			{ spellID = 198888, roleExcluded = "TANK" }, -- Storm Drake - Lightning Breath
+
+			-- Hyrja
+			{ spellID = 192206, func = CombatHandler_Sanctify }, -- Sanctify
 
 			-- Hyrmdall
 			188395, -- Ball Lightning
