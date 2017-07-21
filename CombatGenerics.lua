@@ -25,7 +25,7 @@ do
 			... - Combat arguments.
 	]]--
 	Shame.CombatGeneric_SpellDamage = function(self, node, ...)
-		local playerName, spellName, damageTaken = (select(5, ...)), (select(13, ...)), ((select(15, ...)));
+		local _, _, _, _, playerName, _, _, _, _, _, _, _, spellName, _, damageTaken = ...;
 		local spellID = select(7, GetSpellInfo(spellName));
 
 		if spellID == node.spellID then
