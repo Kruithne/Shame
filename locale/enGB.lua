@@ -44,6 +44,7 @@ do
 		L_CC_STUNNED = "Stunned",
 		L_CC_ASLEEP = "Asleep",
 		L_CC_FEARED = "Feared",
+		L_CC_PUNT = "Punted",
 
 		L_CALLOUT_7D_HOV_ODYN_RUNE = "%s picked the wrong rune! (%s)",
 		L_CALLOUT_7D_HOV_FENRYR_SCENT = "%s failed to run away from %s! (%s)",

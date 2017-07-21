@@ -21,3 +21,4 @@ encounters/7D_BlackRookHold.lua
 encounters/7D_DarkheartThicket.lua
 encounters/7D_MawOfSouls.lua
 encounters/7D_NeltharionsLair.lua
+encounters/7D_EyeOfAzshara.lua
