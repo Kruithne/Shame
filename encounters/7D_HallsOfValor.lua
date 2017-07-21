@@ -32,7 +32,7 @@ do
 
 		-- Check if the player hit has the Scent of Blood debuff.
 		if UnitDebuff(targetName, scentOfBloodName) then
-			self:CombatGeneric_HandleMistake(node, targetName, damageTaken, self.L_CALLOUT_7D_HOV_FENRYR_SCENT);
+			self:CombatGeneric_HandleMistake(node, targetName, damageTaken, self.L_CALLOUT_7D_HOV_FENRYR_SCENT, targetName, scentOfBloodName, damageTaken);
 		end
 	end
 
