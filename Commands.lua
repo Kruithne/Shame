@@ -18,6 +18,7 @@ do
 	local string_gmatch = string.gmatch;
 	local table_concat = table.concat;
 	local string_sub = string.sub;
+	local BreakUpLargeNumbers = BreakUpLargeNumbers;
 
 	--[[
 		Shame.OnCommand
@@ -146,7 +147,9 @@ do
 			local done = false;
 			for index, actor in pairs(rosterIndex) do
 				local suffix = actor.mistakes > 1 and self.L_MISTAKE_MULTI or self.L_MISTAKE_SINGLE;
-				self:Message(self.L_BOARD_FORMAT, channel, index, actor.name, actor.damage or 0, suffix:format(actor.mistakes));
+				local damageTaken = BreakUpLargeNumbers(actor.damage or 0);
+
+				self:Message(self.L_BOARD_FORMAT, channel, index, actor.name, damageTaken, suffix:format(actor.mistakes));
 				done = true;
 			end
 
