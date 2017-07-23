@@ -20,6 +20,7 @@ do
 			202089, -- Burning Geode - Scorch
 			{ spellID = 183407, event = Shame.COMBAT_SPELL_PERIODIC }, -- Vileshard Crawled - Acid Splatter
 			{ spellID = 192800, event = Shame.COMBAT_SPELL_PERIODIC }, -- Blightshared Skitter - Choking Dust
+			{ spellID = 226406, excludeRole = Shame.ROLE_TANK }, -- Emberhusk Dominator - Ember Swipe
 
 			-- Ularogg Cragshaper
 			198475, -- Strike of the Mountain
