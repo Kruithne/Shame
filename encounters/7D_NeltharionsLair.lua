@@ -30,6 +30,7 @@ do
 			198475, -- Strike of the Mountain
 
 			-- Dargrul
+			217090, -- Magma Wave
 			{ spellID = 200721, excludeRole = Shame.ROLE_TANK }, -- Landslide
 		}
 	});
