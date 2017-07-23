@@ -21,6 +21,7 @@ do
 			{ spellID = 183407, event = Shame.COMBAT_SPELL_PERIODIC }, -- Vileshard Crawled - Acid Splatter
 			{ spellID = 192800, event = Shame.COMBAT_SPELL_PERIODIC }, -- Blightshared Skitter - Choking Dust
 			{ spellID = 226406, excludeRole = Shame.ROLE_TANK }, -- Emberhusk Dominator - Ember Swipe
+			{ spellID = 226296, excludeRole = Shame.ROLE_TANK }, -- Vileshard Hulk - Piercing Shards
 
 			-- Rokmora
 			188169, -- Razor Shards
